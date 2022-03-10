@@ -10,7 +10,8 @@ class Screen:
     def __init__(self,height,width):
         self.height = height
         self.width = width
-        self.screen = np.array([[Back.GREEN + ' ' + Style.RESET_ALL for i in range(self.width)] for j in range(self.height)])
+        self.bg = Back.GREEN + ' ' + Style.RESET_ALL
+        self.screen = np.array([[self.bg for i in range(self.width)] for j in range(self.height)])
     
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')

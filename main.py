@@ -6,5 +6,5 @@ from screen import Screen
 from game import Game
 
 game = Game()
-
+game.screen.clear()
 game.play()
