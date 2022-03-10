@@ -16,20 +16,21 @@ class King(Person):
         self.attack = 10
         self.isDead = False
     
-    def attack(self, enemy):
-        enemy.health -= self.attack
-        if enemy.health <= 0:
-            enemy.isDead = True
+    
+    def attackBuilding(self, building):
+        building.health -= self.attack
+        if building.health <= 0:
+            building.isBroken = True
     
     def updateMove(self, screen, ch):
         screen.screen[self.x][self.y] = screen.bg
-        if ch == 'w':          
+        if ch == 'w' and screen.screen[self.x - 1][self.y] == screen.bg:          
             self.x -= 1
-        if ch == 's':
+        if ch == 's' and screen.screen[self.x + 1][self.y] == screen.bg:
             self.x += 1
-        if ch == 'a':
+        if ch == 'a' and screen.screen[self.x][self.y - 1] == screen.bg:
             self.y -= 1
-        if ch == 'd':
+        if ch == 'd' and screen.screen[self.x][self.y + 1] == screen.bg:
             self.y += 1
 
     # polymorphism example
