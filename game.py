@@ -75,6 +75,7 @@ class Game:
             self.king.color = Back.RED
 
     def check_game_over(self):
+        # check here for all barbarians dead as well
         if self.king.isDead:
             self.game_over = True    
     
@@ -101,8 +102,8 @@ class Game:
                 cannon.updateBuilding(self.screen)
                 cannon.updateCannons()
             self.townhall.updateBuilding(self.screen)
-            self.king.draw(self.screen.screen)
             self.updateColors()
+            self.king.draw(self.screen.screen)
             self.check_game_over()
             self.screen.print()
             self.time += 1
