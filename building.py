@@ -24,7 +24,7 @@ class Building:
     def updateBuilding(self, screen):
         if self.isBroken == False:
             # screen.screen[self.x][self.y] = self.ch
-            self.draw(screen.screen, self.color + self.ch + Fore.RESET)
+            self.draw(screen.screen, self.color + self.ch + Back.RESET)
         else:
             # screen.screen[self.x][self.y] = screen.bg
             self.draw(screen.screen, screen.bg)

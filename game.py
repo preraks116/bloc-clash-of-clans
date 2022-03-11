@@ -40,8 +40,26 @@ class Game:
         self.walls += generateLine(20,40,21,0)
 
         self.huts = []
-        for i in range(10):
-            self.huts.append(Hut(random.randint(0,49),random.randint(0,99)))
+        for i in range(5):
+            self.huts.append(Hut(random.randint(0,20),random.randint(0,20)))
+        for i in range(3):
+            self.huts.append(Hut(random.randint(35,45),random.randint(35,80)))
+    
+    def updateColors(self):
+        for wall in self.walls:
+            if wall.health <= 25:
+                wall.color = Back.YELLOW
+            if wall.health <= 15:
+                wall.color = Back.RED
+        for hut in self.huts:
+            if hut.health <= 25:
+                hut.color = Back.YELLOW
+            if hut.health <= 15:
+                hut.color = Back.RED
+        if self.townhall.health <= 25:
+            self.townhall.color = Back.YELLOW
+        if self.townhall.health <= 15:
+            self.townhall.color = Back.RED
         
     def play(self):
         input = Get()
@@ -64,5 +82,6 @@ class Game:
                 hut.updateBuilding(self.screen)
             self.townhall.updateBuilding(self.screen)
             self.king.draw(self.screen.screen)
+            self.updateColors()
             self.screen.print()
             sleep(1/self.framerate)

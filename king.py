@@ -26,12 +26,12 @@ class King(Person):
     def updateMove(self, screen, ch):
         if ch in movementKeys:
             dx, dy = movementKeys[ch]
-            print(screen.screen[self.x + dx][self.y + dy], file=sys.stderr)
+            # print(screen.screen[self.x + dx][self.y + dy], file=sys.stderr)
             if screen.screen[self.x + dx][self.y + dy] == screen.bg:
                 screen.screen[self.x][self.y] = screen.bg
                 self.x += dx
                 self.y += dy
-            print(self.x, self.y, file=sys.stderr)
+            # print(self.x, self.y, file=sys.stderr)
         # if ch in ['w', 'a', 's', 'd']:
         #     screen.screen[self.x][self.y] = screen.bg
         #     if ch == 'w' and screen.screen[self.x -1][self.y] == screen.bg:
@@ -58,7 +58,7 @@ class King(Person):
                 # check if building is close to king
                 if abs(building.x - self.x) <= 1 and abs(building.y - self.y) <= 1:
                     building.health -= self.attack
-                    print(building.health, file=sys.stderr)
+                    # print(building.health, file=sys.stderr)
                     if building.health <= 0:
                         building.isBroken = True
     # polymorphism example

@@ -11,7 +11,7 @@ from building import Building
 class Wall(Building):
     def __init__(self, x,y):
         super().__init__(x,y,1,'#',Back.GREEN)
-        self.health = 30
+        self.health = 40
         # self.isBroken = False
     
     # def updateWall(self, screen):
