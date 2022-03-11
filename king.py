@@ -17,8 +17,8 @@ movementKeys = {
 }
 
 class King(Person):
-    def __init__(self, x,y,game):
-        super().__init__(x,y,'K',Fore.BLACK, game)
+    def __init__(self, x, y, game):
+        super().__init__(x, y, 'K', Fore.GREEN, game)
         self.health = 100
         self.attack = 10
         self.isDead = False
@@ -30,6 +30,7 @@ class King(Person):
             if screen.screen[self.x + dx][self.y + dy] == screen.bg:
                 self.x += dx
                 self.y += dy
+            print(self.x, self.y, file=sys.stderr)
         if ch == ' ':
             for building in self.game.walls:
                 # check if building is close to king
@@ -37,7 +38,11 @@ class King(Person):
                     building.health -= self.attack
                     if building.health <= 0:
                         building.isBroken = True
-            
+            # check if king is close to townhall
+            if abs(self.game.townhall.x - self.x) <= 1 and abs(self.game.townhall.y - self.y) <= 1:
+                self.game.townhall.health -= self.attack
+                if self.game.townhall.health <= 0:
+                    self.game.townhall.isBroken = True 
     # polymorphism example
     def draw(self,screen):
         super().draw(screen)

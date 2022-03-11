@@ -10,12 +10,12 @@ from building import Building
 
 class Wall(Building):
     def __init__(self, x,y):
-        super().__init__(x,y,'#',Fore.BLACK)
+        super().__init__(x,y,1,'#',Back.GREEN)
         self.health = 50
-        self.isBroken = False
+        # self.isBroken = False
     
-    def updateWall(self, screen):
-        if self.isBroken == False:
-            screen.screen[self.x][self.y] = self.ch
-        else:
-            screen.screen[self.x][self.y] = screen.bg
+    # def updateWall(self, screen):
+    #     if self.isBroken == False:
+    #         screen.screen[self.x][self.y] = self.ch
+    #     else:
+    #         screen.screen[self.x][self.y] = screen.bg

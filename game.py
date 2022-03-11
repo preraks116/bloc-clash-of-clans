@@ -8,6 +8,7 @@ from time import monotonic as clock, sleep
 from king import King
 from screen import Screen
 from wall import Wall
+from townhall import Townhall
 from input import *
 
 # \033[0;0H
@@ -30,6 +31,7 @@ class Game:
         self.framerate = 30
         self.game_over = False
         self.king = King(10,10,self)
+        self.townhall = Townhall(30,30)
         self.walls = []
         self.walls += generateLine(20,20,20,1)
         self.walls += generateLine(20,20,20,0)
@@ -52,8 +54,8 @@ class Game:
             
             # self.wall.updateWall(self.screen)
             for wall in self.walls:
-                wall.updateWall(self.screen)
-            
+                wall.updateBuilding(self.screen)
+            self.townhall.updateBuilding(self.screen)
             self.king.draw(self.screen.screen)
             self.screen.print()
             sleep(1/self.framerate)
