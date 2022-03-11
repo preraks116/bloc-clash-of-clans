@@ -8,11 +8,12 @@ import time
 import sys
 
 class Person:
-    def __init__(self, x, y, ch, color):
+    def __init__(self, x, y, ch, color, game):
         self.x = x
         self.y = y
         self.color = color
         self.ch = ch
+        self.game = game
 
     def draw(self, screen):
         screen[self.x][self.y] = self.ch

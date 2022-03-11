@@ -29,7 +29,7 @@ class Game:
         self.screen = Screen(50,100)
         self.framerate = 30
         self.game_over = False
-        self.king = King(10,10)
+        self.king = King(10,10,self)
         self.walls = []
         self.walls += generateLine(20,20,20,1)
         self.walls += generateLine(20,20,20,0)

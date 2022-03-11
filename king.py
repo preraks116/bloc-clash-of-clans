@@ -17,17 +17,11 @@ movementKeys = {
 }
 
 class King(Person):
-    def __init__(self, x,y):
-        super().__init__(x,y,'K',Fore.BLACK)
+    def __init__(self, x,y,game):
+        super().__init__(x,y,'K',Fore.BLACK, game)
         self.health = 100
         self.attack = 10
         self.isDead = False
-    
-    
-    def attackBuilding(self, building):
-        building.health -= self.attack
-        if building.health <= 0:
-            building.isBroken = True
     
     def updateMove(self, screen, ch):
         if ch in movementKeys:
@@ -36,7 +30,13 @@ class King(Person):
             if screen.screen[self.x + dx][self.y + dy] == screen.bg:
                 self.x += dx
                 self.y += dy
-        # if ch == ' ':
+        if ch == ' ':
+            for building in self.game.walls:
+                # check if building is close to king
+                if abs(building.x - self.x) <= 1 and abs(building.y - self.y) <= 1:
+                    building.health -= self.attack
+                    if building.health <= 0:
+                        building.isBroken = True
             
     # polymorphism example
     def draw(self,screen):
