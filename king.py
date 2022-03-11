@@ -25,12 +25,23 @@ class King(Person):
     
     def updateMove(self, screen, ch):
         if ch in movementKeys:
-            screen.screen[self.x][self.y] = screen.bg
             dx, dy = movementKeys[ch]
+            print(screen.screen[self.x + dx][self.y + dy], file=sys.stderr)
             if screen.screen[self.x + dx][self.y + dy] == screen.bg:
+                screen.screen[self.x][self.y] = screen.bg
                 self.x += dx
                 self.y += dy
             print(self.x, self.y, file=sys.stderr)
+        # if ch in ['w', 'a', 's', 'd']:
+        #     screen.screen[self.x][self.y] = screen.bg
+        #     if ch == 'w' and screen.screen[self.x -1][self.y] == screen.bg:
+        #         self.x -= 1
+        #     if ch == 's' and screen.screen[self.x + 1][self.y] == screen.bg:
+        #         self.x += 1
+        #     if ch == 'a' and screen.screen[self.x][self.y - 1] == screen.bg:
+        #         self.y -= 1
+        #     if ch == 'd' and screen.screen[self.x][self.y + 1] == screen.bg:
+        #         self.y += 1
         if ch == ' ':
             for building in self.game.walls:
                 # check if building is close to king
@@ -43,6 +54,13 @@ class King(Person):
                 self.game.townhall.health -= self.attack
                 if self.game.townhall.health <= 0:
                     self.game.townhall.isBroken = True 
+            for building in self.game.huts:
+                # check if building is close to king
+                if abs(building.x - self.x) <= 1 and abs(building.y - self.y) <= 1:
+                    building.health -= self.attack
+                    print(building.health, file=sys.stderr)
+                    if building.health <= 0:
+                        building.isBroken = True
     # polymorphism example
     def draw(self,screen):
         super().draw(screen)

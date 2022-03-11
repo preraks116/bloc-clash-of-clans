@@ -8,10 +8,10 @@ import time
 import sys
 from building import Building
 
-class Wall(Building):
+class Hut(Building):
     def __init__(self, x,y):
-        super().__init__(x,y,1,'#',Back.GREEN)
-        self.health = 30
+        super().__init__(x,y,2,'H',Back.GREEN)
+        self.health = 50
         # self.isBroken = False
     
     # def updateWall(self, screen):

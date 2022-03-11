@@ -6,6 +6,7 @@ from colorama import Fore, Back, Style
 import random
 from time import monotonic as clock, sleep
 from king import King
+from hut import Hut
 from screen import Screen
 from wall import Wall
 from townhall import Townhall
@@ -37,6 +38,10 @@ class Game:
         self.walls += generateLine(20,20,20,0)
         self.walls += generateLine(40,20,20,1)
         self.walls += generateLine(20,40,21,0)
+
+        self.huts = []
+        for i in range(10):
+            self.huts.append(Hut(random.randint(0,49),random.randint(0,99)))
         
     def play(self):
         input = Get()
@@ -55,6 +60,8 @@ class Game:
             # self.wall.updateWall(self.screen)
             for wall in self.walls:
                 wall.updateBuilding(self.screen)
+            for hut in self.huts:
+                hut.updateBuilding(self.screen)
             self.townhall.updateBuilding(self.screen)
             self.king.draw(self.screen.screen)
             self.screen.print()
