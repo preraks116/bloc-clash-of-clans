@@ -21,6 +21,7 @@ class King(Person):
         super().__init__(x, y, 'K', Fore.GREEN, game)
         self.health = 100
         self.attack = 10
+        self.speed = 1
         self.isDead = False
     
     def updateMove(self, screen, ch):
@@ -29,8 +30,8 @@ class King(Person):
             # print(screen.screen[self.x + dx][self.y + dy], file=sys.stderr)
             if screen.screen[self.x + dx][self.y + dy] == screen.bg:
                 screen.screen[self.x][self.y] = screen.bg
-                self.x += dx
-                self.y += dy
+                self.x += dx*self.speed
+                self.y += dy*self.speed
             # print(self.x, self.y, file=sys.stderr)
         # if ch in ['w', 'a', 's', 'd']:
         #     screen.screen[self.x][self.y] = screen.bg

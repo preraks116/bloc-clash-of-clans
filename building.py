@@ -8,13 +8,14 @@ import time
 import sys
 
 class Building:
-    def __init__(self, x, y, size, ch, color):
+    def __init__(self, x, y, size, ch, color, game):
         self.x = x
         self.y = y
         self.size = size
         self.color = color
         self.ch = ch
         self.isBroken = False
+        self.game = game
 
     def draw(self, screen, ch):
         for y in range(self.size):
@@ -23,8 +24,6 @@ class Building:
     
     def updateBuilding(self, screen):
         if self.isBroken == False:
-            # screen.screen[self.x][self.y] = self.ch
             self.draw(screen.screen, self.color + self.ch + Back.RESET)
         else:
-            # screen.screen[self.x][self.y] = screen.bg
             self.draw(screen.screen, screen.bg)

@@ -9,11 +9,13 @@ import sys
 from building import Building
 
 class Wall(Building):
-    def __init__(self, x,y):
-        super().__init__(x,y,1,'#',Back.GREEN)
+    def __init__(self, x,y, game):
+        super().__init__(x,y,1,'#',Back.GREEN, game)
         self.health = 40
+        
         # self.isBroken = False
     
+
     # def updateWall(self, screen):
     #     if self.isBroken == False:
     #         screen.screen[self.x][self.y] = self.ch

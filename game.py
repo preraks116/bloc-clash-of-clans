@@ -5,6 +5,7 @@ from colorama import init as cinit
 from colorama import Fore, Back, Style
 import random
 from time import monotonic as clock, sleep
+from cannon import Cannon
 from king import King
 from hut import Hut
 from screen import Screen
@@ -13,15 +14,7 @@ from townhall import Townhall
 from input import *
 
 # \033[0;0H
-def generateLine(x,y,L,m):
-    p = []
-    for i in range(L):
-        if m == 1:
-            p.append(Wall(x,y+i))
-        elif m == 0:
-            p.append(Wall(x+i,y))
-    
-    return p
+
 
 
 class Game:
@@ -31,20 +24,36 @@ class Game:
         self.screen = Screen(50,100)
         self.framerate = 30
         self.game_over = False
+
         self.king = King(10,10,self)
-        self.townhall = Townhall(30,30)
+
+        self.townhall = Townhall(30,30,self)
+        self.time = 0
         self.walls = []
-        self.walls += generateLine(20,20,20,1)
-        self.walls += generateLine(20,20,20,0)
-        self.walls += generateLine(40,20,20,1)
-        self.walls += generateLine(20,40,21,0)
+        self.walls += self.generateLine(20,20,20,1)
+        self.walls += self.generateLine(20,20,20,0)
+        self.walls += self.generateLine(40,20,20,1)
+        self.walls += self.generateLine(20,40,21,0)
 
         self.huts = []
         for i in range(5):
-            self.huts.append(Hut(random.randint(0,20),random.randint(0,20)))
+            self.huts.append(Hut(random.randint(0,20),random.randint(0,20),self))
         for i in range(3):
-            self.huts.append(Hut(random.randint(35,45),random.randint(35,80)))
-    
+            self.huts.append(Hut(random.randint(45,47),random.randint(45,80),self))
+
+        self.cannons = []
+        for i in range(5):
+            self.cannons.append(Cannon(random.randint(35,40),random.randint(35,40),self))
+    def generateLine(self,x,y,L,m):
+        p = []
+        for i in range(L):
+            if m == 1:
+                p.append(Wall(x,y+i,self))
+            elif m == 0:
+                p.append(Wall(x+i,y,self))
+        
+        return p
+
     def updateColors(self):
         for wall in self.walls:
             if wall.health <= 25:
@@ -56,11 +65,19 @@ class Game:
                 hut.color = Back.YELLOW
             if hut.health <= 15:
                 hut.color = Back.RED
-        if self.townhall.health <= 25:
+        if self.townhall.health <= 65:
             self.townhall.color = Back.YELLOW
-        if self.townhall.health <= 15:
+        if self.townhall.health <= 25:
             self.townhall.color = Back.RED
-        
+        if self.king.health <= 65:
+            self.king.color = Back.YELLOW
+        if self.king.health <= 25:
+            self.king.color = Back.RED
+
+    def check_game_over(self):
+        if self.king.isDead:
+            self.game_over = True    
+    
     def play(self):
         input = Get()
         while not self.game_over:
@@ -80,8 +97,14 @@ class Game:
                 wall.updateBuilding(self.screen)
             for hut in self.huts:
                 hut.updateBuilding(self.screen)
+            for cannon in self.cannons:
+                cannon.updateBuilding(self.screen)
+                cannon.updateCannons()
             self.townhall.updateBuilding(self.screen)
             self.king.draw(self.screen.screen)
             self.updateColors()
+            self.check_game_over()
             self.screen.print()
+            self.time += 1
+            print(self.time, file=sys.stderr)
             sleep(1/self.framerate)
