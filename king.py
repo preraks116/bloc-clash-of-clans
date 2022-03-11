@@ -64,16 +64,18 @@ class King(Person):
                     building.health -= self.attack
                     if building.health <= 0:
                         building.isBroken = True
+            
+            for building in self.game.cannons:
+                # check if building is close to king
+                if abs(building.x - self.x) <= 1 and abs(building.y - self.y) <= 1:
+                    building.health -= self.attack
+                    if building.health <= 0:
+                        building.isBroken = True
 
             if not self.game.townhall.isBroken and self.checkCollision(self.game.townhall):
                 print(self.game.townhall.health, file=sys.stderr)
                 self.registerHit(self.game.townhall)
 
-            # for hut in self.game.huts:
-            #     if not hut.isBroken and self.checkCollision(hut):   
-            #         print(hut.x,hut.y,file=sys.stderr)
-            #         print("---", file=sys.stderr)
-            #         self.registerHit(hut)
             for building in self.game.huts:
                 # check if building is close to king
                 if abs(building.x - self.x) <= 1 and abs(building.y - self.y) <= 1:

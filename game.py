@@ -35,15 +35,16 @@ class Game:
         self.walls += self.generateLine(40,20,20,1)
         self.walls += self.generateLine(20,40,21,0)
 
+        self.hutscoords = [[15,15],[10,15],[15,80],[10,80],[15,45],[40,45],[45,10],[40,80]]
         self.huts = []
-        for i in range(5):
-            self.huts.append(Hut(random.randint(0,20),random.randint(0,20),self))
-        for i in range(3):
-            self.huts.append(Hut(random.randint(45,47),random.randint(45,80),self))
+        for i in range(len(self.hutscoords)):
+            self.huts.append(Hut(self.hutscoords[i][0],self.hutscoords[i][1],self))
 
+        self.cannoncoords = [[23,25],[23,30],[43,25],[43,30],[33,25],[35,30]]
         self.cannons = []
-        for i in range(5):
-            self.cannons.append(Cannon(random.randint(35,40),random.randint(35,40),self))
+        for i in range(len(self.cannoncoords)):
+            self.cannons.append(Cannon(self.cannoncoords[i][0],self.cannoncoords[i][1],self))
+
     def generateLine(self,x,y,L,m):
         p = []
         for i in range(L):
@@ -65,6 +66,11 @@ class Game:
                 hut.color = Back.YELLOW
             if hut.health <= 15:
                 hut.color = Back.RED
+        for cannon in self.cannons:
+            if cannon.health <= 15:
+                cannon.color = Back.YELLOW
+            if cannon.health <= 5:
+                cannon.color = Back.RED
         if self.townhall.health <= 65:
             self.townhall.color = Back.YELLOW
         if self.townhall.health <= 25:

@@ -18,11 +18,13 @@ class Cannon(Building):
     
     def updateCannons(self):
     # check if king is close to the cannon
-        if abs(self.game.king.x - self.x) <= 3 and abs(self.game.king.y - self.y) <= 3 and self.game.time % self.cooldown == 0:
+        if not self.isBroken and abs(self.game.king.x - self.x) <= 3 and abs(self.game.king.y - self.y) <= 3 and self.game.time % self.cooldown == 0:
             self.game.king.health -= self.attack
             print("Cannon hit the king: ",self.game.king.health, file=sys.stderr)
             if self.game.king.health <= 0:
                 self.game.king.isDead = True
+    
+    # for loop for attacking all the barbarians, add a break after the first iteration because we only want to attack one
             
     # def updateWall(self, screen):
     #     if self.isBroken == False:
