@@ -11,6 +11,16 @@ from wall import Wall
 from input import *
 
 # \033[0;0H
+def generateLine(x,y,L,m):
+    p = []
+    for i in range(L):
+        if m == 1:
+            p.append(Wall(x,y+i))
+        elif m == 0:
+            p.append(Wall(x+i,y))
+    
+    return p
+
 
 class Game:
     def __init__(self):
@@ -20,7 +30,11 @@ class Game:
         self.framerate = 30
         self.game_over = False
         self.king = King(10,10)
-        self.wall = Wall(20,20)
+        self.walls = []
+        self.walls += generateLine(20,20,20,1)
+        self.walls += generateLine(20,20,20,0)
+        self.walls += generateLine(40,20,20,1)
+        self.walls += generateLine(20,40,21,0)
         
     def play(self):
         input = Get()
@@ -36,6 +50,8 @@ class Game:
                 else:
                     self.king.updateMove(self.screen, ch)
             self.king.draw(self.screen.screen)
-            self.wall.updateWall(self.screen)
+            # self.wall.updateWall(self.screen)
+            for wall in self.walls:
+                wall.updateWall(self.screen)
             self.screen.print()
             sleep(1/self.framerate)

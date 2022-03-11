@@ -9,6 +9,13 @@ import time
 import sys
 from person import Person
 
+movementKeys = {
+    'w': (-1, 0),
+    'a': (0, -1),
+    's': (1, 0),
+    'd': (0, 1)
+}
+
 class King(Person):
     def __init__(self, x,y):
         super().__init__(x,y,'K',Fore.BLACK)
@@ -23,16 +30,14 @@ class King(Person):
             building.isBroken = True
     
     def updateMove(self, screen, ch):
-        screen.screen[self.x][self.y] = screen.bg
-        if ch == 'w' and screen.screen[self.x - 1][self.y] == screen.bg:          
-            self.x -= 1
-        if ch == 's' and screen.screen[self.x + 1][self.y] == screen.bg:
-            self.x += 1
-        if ch == 'a' and screen.screen[self.x][self.y - 1] == screen.bg:
-            self.y -= 1
-        if ch == 'd' and screen.screen[self.x][self.y + 1] == screen.bg:
-            self.y += 1
-
+        if ch in movementKeys:
+            screen.screen[self.x][self.y] = screen.bg
+            dx, dy = movementKeys[ch]
+            if screen.screen[self.x + dx][self.y + dy] == screen.bg:
+                self.x += dx
+                self.y += dy
+        # if ch == ' ':
+            
     # polymorphism example
     def draw(self,screen):
         super().draw(screen)
