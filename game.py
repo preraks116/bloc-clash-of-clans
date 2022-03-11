@@ -49,9 +49,11 @@ class Game:
                     self.game_over = True
                 else:
                     self.king.updateMove(self.screen, ch)
-            self.king.draw(self.screen.screen)
+            
             # self.wall.updateWall(self.screen)
             for wall in self.walls:
                 wall.updateWall(self.screen)
+            
+            self.king.draw(self.screen.screen)
             self.screen.print()
             sleep(1/self.framerate)
