@@ -15,7 +15,7 @@ from input import *
 
 # \033[0;0H
 
-
+cinit(autoreset=True)
 
 class Game:
     def __init__(self):
@@ -107,5 +107,5 @@ class Game:
             self.check_game_over()
             self.screen.print()
             self.time += 1
-            print(self.time, file=sys.stderr)
+            # print(self.time, file=sys.stderr)
             sleep(1/self.framerate)

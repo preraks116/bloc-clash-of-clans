@@ -10,7 +10,7 @@ from building import Building
 
 class Hut(Building):
     def __init__(self, x,y, game):
-        super().__init__(x,y,2,'H',Back.GREEN, game)
+        super().__init__(x,y,1,1,'H',Back.GREEN, game)
         self.health = 50
         # self.isBroken = False
     

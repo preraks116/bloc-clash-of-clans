@@ -16,5 +16,6 @@ class Person:
         self.game = game
 
     def draw(self, screen):
-        screen[self.x][self.y] = self.color + self.ch + Back.RESET
+        screen[self.x][self.y] = self.color + self.ch
+
     

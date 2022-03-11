@@ -9,6 +9,6 @@ from building import Building
 
 class Townhall(Building):
     def __init__(self, x,y, game):
-        super().__init__(x,y,4,'T',Back.GREEN, game)
+        super().__init__(x,y,4,3,'T',Back.GREEN, game)
         self.health = 100
     
