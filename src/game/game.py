@@ -1,19 +1,21 @@
 import os
 import numpy as np
 import sys
+import copy
+import pickle
 from colorama import init as cinit
 from colorama import Fore, Back, Style
 import random
 from time import monotonic as clock, sleep
-from army.barbarian import Barbarian
-from buildings.cannon import Cannon
-from army.king import King
-from buildings.hut import Hut
-from game.screen import Screen
-from buildings.wall import Wall
-from buildings.townhall import Townhall
-from buildings.spawnpoint import SpawnPoint
-from utils.input import *
+from src.army.barbarian import Barbarian
+from src.buildings.cannon import Cannon
+from src.army.king import King
+from src.buildings.hut import Hut
+from src.game.screen import Screen
+from src.buildings.wall import Wall
+from src.buildings.townhall import Townhall
+from src.buildings.spawnpoint import SpawnPoint
+from src.utils.input import *
 
 # \033[0;0H
 
@@ -28,6 +30,7 @@ class Game:
         self.game_over = False
         self.gamelost = False
         self.gamewon  = False
+        self.screens = []
 
         self.rageSpell = 1
         self.healSpell = 1
@@ -154,12 +157,12 @@ class Game:
         print("Rage Spells Left: ", self.rageSpell)
     
     def play(self):
-        input = Get()
+        input__ = Get()
         while not self.game_over:
             # self.screen.clear()
             print('\033[0;0H')
             # self.get_input()
-            ch = input_to(input)
+            ch = input_to(input__)
             # ch = input_to(input)
             if ch is not None:
                 if ch == 'q':
@@ -209,6 +212,7 @@ class Game:
                 spawnPoint.updateBuilding(self.screen)
             self.updateColors()
             self.king.draw(self.screen.screen)
+            self.screens.append(copy.deepcopy(self.screen.screen))
             self.screen.print()
             self.updateHUD()
             self.time += 1
@@ -218,4 +222,7 @@ class Game:
             print("You Win!")
         elif self.gamelost:
             print("You Lose!")
+        name = input("Enter file name: ")
+        with open('replays/' + name, 'wb') as f:
+            pickle.dump(self.screens,f)
     

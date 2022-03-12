@@ -2,11 +2,11 @@ import os
 import numpy as np
 from colorama import init as cinit
 from colorama import Fore, Back, Style
-from game.screen import Screen
+from src.game.screen import Screen
 import random
 import time
 import sys
-from army.person import Person
+from src.army.person import Person
 
 movementKeys = {
     'w': (-1, 0),
@@ -45,7 +45,7 @@ class King(Person):
                     self.registerHit(building)
 
             if not self.game.townhall.isBroken and self.checkCollision(self.game.townhall):
-                print(self.game.townhall.health, file=sys.stderr)
+                # print(self.game.townhall.health, file=sys.stderr)
                 self.registerHit(self.game.townhall)
 
             for building in self.game.huts:

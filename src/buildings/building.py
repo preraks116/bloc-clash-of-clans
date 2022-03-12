@@ -2,7 +2,7 @@ import os
 import numpy as np
 from colorama import init as cinit
 from colorama import Fore, Back, Style
-from game.screen import Screen
+from src.game.screen import Screen
 import random
 import time
 import sys

@@ -2,12 +2,12 @@ import os
 import numpy as np
 from colorama import init as cinit
 from colorama import Fore, Back, Style
-from game.screen import Screen
+from src.game.screen import Screen
 import random
 import time
 import sys
-from buildings.building import Building
-from army.barbarian import Barbarian
+from src.buildings.building import Building
+from src.army.barbarian import Barbarian
 
 class SpawnPoint(Building):
     def __init__(self, x,y, game):

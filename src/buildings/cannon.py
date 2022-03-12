@@ -2,11 +2,11 @@ import os
 import numpy as np
 from colorama import init as cinit
 from colorama import Fore, Back, Style
-from game.screen import Screen
+from src.game.screen import Screen
 import random
 import time
 import sys
-from buildings.building import Building
+from src.buildings.building import Building
 
 class Cannon(Building):
     def __init__(self, x,y, game):
@@ -21,7 +21,7 @@ class Cannon(Building):
         # check if king is close to the cannon
         if not self.isBroken and not self.game.king.isDead and abs(self.game.king.x - self.x) + abs(self.game.king.y - self.y) <= self.range and self.game.time % self.cooldown == 0:
             self.game.king.health -= self.attack
-            print("Cannon hit the king: ",self.game.king.health, file=sys.stderr)
+            # print("Cannon hit the king: ",self.game.king.health, file=sys.stderr)
             if self.game.king.health <= 0:
                 self.game.king.isDead = True
     
@@ -30,7 +30,7 @@ class Cannon(Building):
             if not barbarian.isDead and not self.isBroken and abs(barbarian.x - self.x) + abs(barbarian.y - self.y) <= self.range and self.game.time % self.cooldown == 0:
                 barbarian.health -= self.attack
                 # add indication that the barb is getting attacked
-                print("Cannon hit the barbarian: ",barbarian.health, file=sys.stderr)
+                # print("Cannon hit the barbarian: ",barbarian.health, file=sys.stderr)
                 if barbarian.health <= 0:
                     barbarian.isDead = True
                 break
