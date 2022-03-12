@@ -2,12 +2,11 @@ import os
 import numpy as np
 from colorama import init as cinit
 from colorama import Fore, Back, Style
-from person import Person
-from screen import Screen
+from game.screen import Screen
 import random
 import time
 import sys
-from person import Person
+from army.person import Person
 
 class Barbarian(Person):
     def __init__(self, x, y, game):

@@ -2,8 +2,8 @@ import time
 import random
 import sys
 import os
-from screen import Screen
-from game import Game
+from game.screen import Screen
+from game.game import Game
 
 game = Game()
 game.screen.clear()

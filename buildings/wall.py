@@ -2,11 +2,11 @@ import os
 import numpy as np
 from colorama import init as cinit
 from colorama import Fore, Back, Style
-from screen import Screen
+from game.screen import Screen
 import random
 import time
 import sys
-from building import Building
+from buildings.building import Building
 
 class Wall(Building):
     def __init__(self, x,y, game):

@@ -5,7 +5,7 @@ from colorama import Fore, Back, Style
 import random
 import time
 import sys
-from building import Building
+from buildings.building import Building
 
 class Townhall(Building):
     def __init__(self, x,y, game):

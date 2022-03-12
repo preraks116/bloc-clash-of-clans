@@ -5,14 +5,14 @@ from colorama import init as cinit
 from colorama import Fore, Back, Style
 import random
 from time import monotonic as clock, sleep
-from barbarian import Barbarian
-from cannon import Cannon
-from king import King
-from hut import Hut
-from screen import Screen
-from wall import Wall
-from townhall import Townhall
-from input import *
+from army.barbarian import Barbarian
+from buildings.cannon import Cannon
+from army.king import King
+from buildings.hut import Hut
+from game.screen import Screen
+from buildings.wall import Wall
+from buildings.townhall import Townhall
+from utils.input import *
 
 # \033[0;0H
 
