@@ -73,30 +73,37 @@ class Game:
                 wall.color = Back.YELLOW
             if wall.health <= 15:
                 wall.color = Back.RED
+
         for hut in self.huts:
             if hut.health <= 25:
                 hut.color = Back.YELLOW
             if hut.health <= 15:
                 hut.color = Back.RED
+
         for cannon in self.cannons:
             if cannon.health <= 15:
                 cannon.color = Back.YELLOW
             if cannon.health <= 5:
                 cannon.color = Back.RED
+
         if self.townhall.health <= 65:
             self.townhall.color = Back.YELLOW
         if self.townhall.health <= 25:
             self.townhall.color = Back.RED
+
         if self.king.health <= 65:
-            self.king.color = Back.YELLOW
+            self.king.color = Back.LIGHTMAGENTA_EX
         if self.king.health <= 25:
-            self.king.color = Back.RED
+            self.king.color = Back.LIGHTYELLOW_EX
+        if self.king.health <= 0:
+            self.king.color = Back.WHITE
+
         for barbarian in self.barbarians:
             if barbarian.health <= 10:
-                barbarian.color = Back.LIGHTGREEN_EX
+                barbarian.color = Back.LIGHTMAGENTA_EX
             if barbarian.health <= 5:
-                barbarian.color = Back.LIGHTBLUE_EX
-            if barbarian.health == 0:
+                barbarian.color = Back.LIGHTYELLOW_EX
+            if barbarian.health <= 0:
                 barbarian.color = Back.WHITE
 
     def check_game_over(self):

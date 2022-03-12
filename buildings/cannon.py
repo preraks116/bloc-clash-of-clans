@@ -33,7 +33,6 @@ class Cannon(Building):
                 print("Cannon hit the barbarian: ",barbarian.health, file=sys.stderr)
                 if barbarian.health <= 0:
                     barbarian.isDead = True
-                    
                 break
             
     # def updateWall(self, screen):
