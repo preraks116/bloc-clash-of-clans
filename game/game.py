@@ -123,6 +123,17 @@ class Game:
             return
         self.game_over = True
 
+    def updateHUD(self):
+        # using kings health to print a health bar 
+        boxes = int(self.king.health/10)
+        print(boxes,file=sys.stderr)
+        bar = ""
+        for i in range(10):
+            if i < boxes:
+                bar += Fore.GREEN + "█ " + Style.RESET_ALL
+            else:
+                bar += Fore.RED + "█ " + Style.RESET_ALL
+        print("King's health: " , bar)
     
     def play(self):
         input = Get()
@@ -163,6 +174,7 @@ class Game:
             self.updateColors()
             self.king.draw(self.screen.screen)
             self.screen.print()
+            self.updateHUD()
             self.time += 1
             # print(self.time, file=sys.stderr)
             sleep(1/self.framerate)
