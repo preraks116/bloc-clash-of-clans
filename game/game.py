@@ -26,6 +26,8 @@ class Game:
         self.screen = Screen(50,100)
         self.framerate = 30
         self.game_over = False
+        self.gamelost = False
+        self.gamewon  = False
 
         self.rageSpell = 1
         self.healSpell = 1
@@ -115,8 +117,14 @@ class Game:
 
     def check_game_over(self):
         # check here for all barbarians dead as well
-        if self.king.isDead:
-            self.game_over = True    
+        if not self.king.isDead:
+            return
+        for barbarian in self.barbarians:
+            if not barbarian.isDead:
+                return
+        self.game_over = True    
+        self.gamelost = True
+        print("GAME OVER")
 
     def check_game_win(self):
         # check if all buildings are destroyed 
@@ -129,6 +137,7 @@ class Game:
         if not self.townhall.isBroken:
             return
         self.game_over = True
+        self.gamewon = True
 
     def updateHUD(self):
         # using kings health to print a health bar 
@@ -205,3 +214,8 @@ class Game:
             self.time += 1
             # print(self.time, file=sys.stderr)
             sleep(1/self.framerate)
+        if self.gamewon:
+            print("You Win!")
+        elif self.gamelost:
+            print("You Lose!")
+    

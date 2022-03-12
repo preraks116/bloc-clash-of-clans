@@ -13,7 +13,7 @@ class Barbarian(Person):
         super().__init__(x, y, 'B', Back.BLACK, game)
         self.maxHealth = 20
         self.health = self.maxHealth
-        self.attack = 2
+        self.attack = 5
         self.speed = 1
         self.cooldown = 3
         self.isDead = False
