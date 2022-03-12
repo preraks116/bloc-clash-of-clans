@@ -66,16 +66,16 @@ class Barbarian(Person):
             if not self.checkCollision(self.nearestBuilding):
                 flag = 0
                 screen.screen[self.x][self.y] = screen.bg
-                if self.x < self.nearestBuilding.x and screen.screen[self.x + 1][self.y] == screen.bg:
+                if self.x < self.nearestBuilding.x and (screen.screen[self.x + 1][self.y] == screen.bg or screen.screen[self.x + 1][self.y][5] == self.ch):
                     self.x += self.speed
                     flag = 1
-                elif self.x > self.nearestBuilding.x and screen.screen[self.x - 1][self.y] == screen.bg:
+                elif self.x > self.nearestBuilding.x and (screen.screen[self.x - 1][self.y] == screen.bg or screen.screen[self.x - 1][self.y][5] == self.ch):
                     self.x -= self.speed
                     flag = 1
-                elif self.y < self.nearestBuilding.y and screen.screen[self.x][self.y + 1] == screen.bg:
+                elif self.y < self.nearestBuilding.y and (screen.screen[self.x][self.y + 1] == screen.bg or screen.screen[self.x][self.y + 1][5] == self.ch):
                     self.y += self.speed
                     flag = 1
-                elif self.y > self.nearestBuilding.y and screen.screen[self.x][self.y - 1] == screen.bg:
+                elif self.y > self.nearestBuilding.y and (screen.screen[self.x][self.y - 1] == screen.bg or screen.screen[self.x][self.y - 1][5] == self.ch):
                     self.y -= self.speed
                     flag = 1
                 
@@ -83,7 +83,12 @@ class Barbarian(Person):
                     # print("wall detected", file=sys.stderr)
                     wall = self.getNearestWall()
                     if wall is not None:
-                        self.registerHit(wall)
+                        # print(self.getDistance(wall),file=sys.stderr)
+                        if self.getDistance(wall) == 1:
+                            self.registerHit(wall)
+                        else:
+                            self.getNearestBuilding()
+
                 
             else:
                 self.registerHit(self.nearestBuilding)

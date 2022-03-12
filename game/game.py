@@ -12,6 +12,7 @@ from buildings.hut import Hut
 from game.screen import Screen
 from buildings.wall import Wall
 from buildings.townhall import Townhall
+from buildings.spawnpoint import SpawnPoint
 from utils.input import *
 
 # \033[0;0H
@@ -46,10 +47,15 @@ class Game:
         for i in range(len(self.cannoncoords)):
             self.cannons.append(Cannon(self.cannoncoords[i][0],self.cannoncoords[i][1],self))
 
-        self.barbcoords = [[35,41]]
+        # self.barbcoords = [[35,41]]
         self.barbarians = []
-        for i in range(len(self.barbcoords)):
-            self.barbarians.append(Barbarian(self.barbcoords[i][0],self.barbcoords[i][1],self))
+        # for i in range(len(self.barbcoords)):
+        #     self.barbarians.append(Barbarian(self.barbcoords[i][0],self.barbcoords[i][1],self))
+        
+        self.spawnPoints = []
+        self.spawncoords = [[48,50]]
+        for i in range(len(self.spawncoords)):
+            self.spawnPoints.append(SpawnPoint(self.spawncoords[i][0],self.spawncoords[i][1],self))
 
     def generateLine(self,x,y,L,m):
         p = []
@@ -102,6 +108,8 @@ class Game:
             if ch is not None:
                 if ch == 'q':
                     self.game_over = True
+                elif ch == '1':
+                    self.spawnPoints[0].spawnBarb(self.barbarians)
                 else:
                     self.king.updateMove(self.screen, ch)
             
@@ -117,6 +125,8 @@ class Game:
             for barbarian in self.barbarians:
                 barbarian.updateBarb(self.screen)
                 barbarian.draw(self.screen.screen)
+            for spawnPoint in self.spawnPoints:
+                spawnPoint.updateBuilding(self.screen)
             self.updateColors()
             self.king.draw(self.screen.screen)
             self.check_game_over()
