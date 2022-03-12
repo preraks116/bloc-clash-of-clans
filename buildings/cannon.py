@@ -18,14 +18,23 @@ class Cannon(Building):
         # self.isBroken = False
     
     def updateCannons(self):
-    # check if king is close to the cannon
+        # check if king is close to the cannon
         if not self.isBroken and abs(self.game.king.x - self.x) + abs(self.game.king.y - self.y) <= self.range and self.game.time % self.cooldown == 0:
             self.game.king.health -= self.attack
             print("Cannon hit the king: ",self.game.king.health, file=sys.stderr)
             if self.game.king.health <= 0:
                 self.game.king.isDead = True
     
-    # for loop for attacking all the barbarians, add a break after the first iteration because we only want to attack one
+        # for loop for attacking all the barbarians, add a break after the first iteration because we only want to attack one
+        for barbarian in self.game.barbarians:
+            if not barbarian.isDead and not self.isBroken and abs(barbarian.x - self.x) + abs(barbarian.y - self.y) <= self.range and self.game.time % self.cooldown == 0:
+                barbarian.health -= self.attack
+                # add indication that the barb is getting attacked
+                print("Cannon hit the barbarian: ",barbarian.health, file=sys.stderr)
+                if barbarian.health <= 0:
+                    barbarian.isDead = True
+                    
+                break
             
     # def updateWall(self, screen):
     #     if self.isBroken == False:

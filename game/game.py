@@ -53,12 +53,12 @@ class Game:
         #     self.barbarians.append(Barbarian(self.barbcoords[i][0],self.barbcoords[i][1],self))
         
         self.spawnPoints = []
-        self.spawncoords = [[48,50]]
+        self.spawncoords = [[48,50], [48,40], [48,30]]
         for i in range(len(self.spawncoords)):
             self.spawnPoints.append(SpawnPoint(self.spawncoords[i][0],self.spawncoords[i][1],self))
 
     def generateLine(self,x,y,L,m):
-        p = []
+        p = []  
         for i in range(L):
             if m == 1:
                 p.append(Wall(x,y+i,self))
@@ -91,6 +91,13 @@ class Game:
             self.king.color = Back.YELLOW
         if self.king.health <= 25:
             self.king.color = Back.RED
+        for barbarian in self.barbarians:
+            if barbarian.health <= 10:
+                barbarian.color = Back.LIGHTGREEN_EX
+            if barbarian.health <= 5:
+                barbarian.color = Back.LIGHTBLUE_EX
+            if barbarian.health == 0:
+                barbarian.color = Back.WHITE
 
     def check_game_over(self):
         # check here for all barbarians dead as well
@@ -123,6 +130,10 @@ class Game:
                     self.game_over = True
                 elif ch == '1':
                     self.spawnPoints[0].spawnBarb(self.barbarians)
+                elif ch == '2':
+                    self.spawnPoints[1].spawnBarb(self.barbarians)
+                elif ch == '3':
+                    self.spawnPoints[2].spawnBarb(self.barbarians)
                 else:
                     self.king.updateMove(self.screen, ch)
             

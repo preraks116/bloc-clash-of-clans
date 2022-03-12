@@ -11,7 +11,7 @@ from army.person import Person
 class Barbarian(Person):
     def __init__(self, x, y, game):
         super().__init__(x, y, 'B', Back.BLACK, game)
-        self.health = 50
+        self.health = 20
         self.attack = 2
         self.speed = 1
         self.cooldown = 3
@@ -87,9 +87,7 @@ class Barbarian(Person):
                         if self.getDistance(wall) == 1:
                             self.registerHit(wall)
                         else:
-                            self.getNearestBuilding()
-
-                
+                            self.getNearestBuilding()                
             else:
                 self.registerHit(self.nearestBuilding)
                 print("hit:", self.nearestBuilding.health,' ', self.nearestBuilding.isBroken, file=sys.stderr)
