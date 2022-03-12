@@ -96,6 +96,19 @@ class Game:
         # check here for all barbarians dead as well
         if self.king.isDead:
             self.game_over = True    
+
+    def check_game_win(self):
+        # check if all buildings are destroyed 
+        for hut in self.huts:
+            if not hut.isBroken:
+                return
+        for cannon in self.cannons:
+            if not cannon.isBroken:
+                return
+        if not self.townhall.isBroken:
+            return
+        self.game_over = True
+
     
     def play(self):
         input = Get()
@@ -114,6 +127,8 @@ class Game:
                     self.king.updateMove(self.screen, ch)
             
             # self.wall.updateWall(self.screen)
+            self.check_game_over()
+            self.check_game_win()
             for wall in self.walls:
                 wall.updateBuilding(self.screen)
             for hut in self.huts:
@@ -129,7 +144,6 @@ class Game:
                 spawnPoint.updateBuilding(self.screen)
             self.updateColors()
             self.king.draw(self.screen.screen)
-            self.check_game_over()
             self.screen.print()
             self.time += 1
             # print(self.time, file=sys.stderr)

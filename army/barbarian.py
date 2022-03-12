@@ -64,22 +64,22 @@ class Barbarian(Person):
                 self.getNearestBuilding()
                 print(self.nearestBuilding.x, self.nearestBuilding.y, file=sys.stderr)
             if not self.checkCollision(self.nearestBuilding):
-                flag = 0
+                hasStopped = 1
                 screen.screen[self.x][self.y] = screen.bg
                 if self.x < self.nearestBuilding.x and (screen.screen[self.x + 1][self.y] == screen.bg or screen.screen[self.x + 1][self.y][5] == self.ch):
                     self.x += self.speed
-                    flag = 1
+                    hasStopped = 0
                 elif self.x > self.nearestBuilding.x and (screen.screen[self.x - 1][self.y] == screen.bg or screen.screen[self.x - 1][self.y][5] == self.ch):
                     self.x -= self.speed
-                    flag = 1
+                    hasStopped = 0
                 elif self.y < self.nearestBuilding.y and (screen.screen[self.x][self.y + 1] == screen.bg or screen.screen[self.x][self.y + 1][5] == self.ch):
                     self.y += self.speed
-                    flag = 1
+                    hasStopped = 0
                 elif self.y > self.nearestBuilding.y and (screen.screen[self.x][self.y - 1] == screen.bg or screen.screen[self.x][self.y - 1][5] == self.ch):
                     self.y -= self.speed
-                    flag = 1
+                    hasStopped = 0
                 
-                if not flag:
+                if hasStopped:
                     # print("wall detected", file=sys.stderr)
                     wall = self.getNearestWall()
                     if wall is not None:
