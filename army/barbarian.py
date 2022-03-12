@@ -62,7 +62,9 @@ class Barbarian(Person):
         if not self.isDead:
             if self.nearestBuilding is None:
                 self.getNearestBuilding()
-                print(self.nearestBuilding.x, self.nearestBuilding.y, file=sys.stderr)
+                if self.nearestBuilding is None:
+                    self.game.game_over = True
+                    return
             if not self.checkCollision(self.nearestBuilding):
                 hasStopped = 1
                 screen.screen[self.x][self.y] = screen.bg
@@ -90,7 +92,7 @@ class Barbarian(Person):
                             self.getNearestBuilding()                
             else:
                 self.registerHit(self.nearestBuilding)
-                print("hit:", self.nearestBuilding.health,' ', self.nearestBuilding.isBroken, file=sys.stderr)
+                # print("hit:", self.nearestBuilding.health,' ', self.nearestBuilding.isBroken, file=sys.stderr)
                 if self.nearestBuilding.isBroken:
                     self.nearestBuilding = None
                         

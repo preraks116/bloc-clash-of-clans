@@ -126,7 +126,7 @@ class Game:
     def updateHUD(self):
         # using kings health to print a health bar 
         boxes = int(self.king.health/10)
-        print(boxes,file=sys.stderr)
+        # print(boxes,file=sys.stderr)
         bar = ""
         for i in range(10):
             if i < boxes:
