@@ -11,12 +11,14 @@ from army.person import Person
 class Barbarian(Person):
     def __init__(self, x, y, game):
         super().__init__(x, y, 'B', Back.BLACK, game)
-        self.health = 20
+        self.maxHealth = 20
+        self.health = self.maxHealth
         self.attack = 2
         self.speed = 1
         self.cooldown = 3
         self.isDead = False
         self.nearestBuilding = None
+        self.cooldown = 2
 
     def getDistance(self, building):
         return (abs(self.x - building.x) + abs(self.y - building.y))
@@ -59,7 +61,7 @@ class Barbarian(Person):
         return nearest
     
     def updateBarb(self,screen):
-        if not self.isDead:
+        if not self.isDead and self.game.time % self.cooldown == 0:
             if self.nearestBuilding is None:
                 self.getNearestBuilding()
                 if self.nearestBuilding is None:

@@ -27,6 +27,9 @@ class Game:
         self.framerate = 30
         self.game_over = False
 
+        self.rageSpell = 1
+        self.healSpell = 1
+
         self.king = King(10,10,self)
 
         self.townhall = Townhall(30,30,self)
@@ -91,6 +94,8 @@ class Game:
         if self.townhall.health <= 25:
             self.townhall.color = Back.RED
 
+        if self.king.health <= self.king.maxHealth:
+            self.king.color = Back.BLACK
         if self.king.health <= 65:
             self.king.color = Back.LIGHTMAGENTA_EX
         if self.king.health <= 25:
@@ -99,6 +104,8 @@ class Game:
             self.king.color = Back.WHITE
 
         for barbarian in self.barbarians:
+            if barbarian.health <= barbarian.maxHealth:
+                barbarian.color = Back.BLACK
             if barbarian.health <= 10:
                 barbarian.color = Back.LIGHTMAGENTA_EX
             if barbarian.health <= 5:
@@ -134,6 +141,8 @@ class Game:
             else:
                 bar += Fore.RED + "█ " + Style.RESET_ALL
         print("King's health: " , bar)
+        print("Heal Spells Left: ", self.healSpell)
+        print("Rage Spells Left: ", self.rageSpell)
     
     def play(self):
         input = Get()
@@ -152,6 +161,24 @@ class Game:
                     self.spawnPoints[1].spawnBarb(self.barbarians)
                 elif ch == '3':
                     self.spawnPoints[2].spawnBarb(self.barbarians)
+                elif ch == 'r':
+                    if self.rageSpell:
+                        self.rageSpell = 0
+                        self.king.attack *= 2
+                        self.king.cooldown /= 2
+                        for barbarian in self.barbarians:
+                            barbarian.attack *= 2
+                            barbarian.cooldown /= 2
+                elif ch == 'h':
+                    if self.healSpell:
+                        self.healSpell = 0
+                        self.king.health *= 1.5
+                        if self.king.health > self.king.maxHealth:
+                            self.king.health = self.king.maxHealth
+                        for barbarian in self.barbarians:
+                            barbarian.health *= 1.5
+                            if barbarian.health > barbarian.maxHealth:
+                                barbarian.health = barbarian.maxHealth
                 else:
                     self.king.updateMove(self.screen, ch)
             

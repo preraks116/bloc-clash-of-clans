@@ -18,16 +18,18 @@ movementKeys = {
 class King(Person):
     def __init__(self, x, y, game):
         super().__init__(x, y, 'K', Back.BLACK, game)
-        self.health = 100
+        self.maxHealth = 100
+        self.health = self.maxHealth
         self.attack = 10
         self.speed = 1
         self.isDead = False
+        self.cooldown = 2
     
     def updateMove(self, screen, ch):
-        if not self.isDead and ch in movementKeys:
+        if not self.isDead and ch in movementKeys and self.game.time % self.cooldown == 0:
             dx, dy = movementKeys[ch]
             # print(screen.screen[self.x + dx][self.y + dy], file=sys.stderr)
-            if screen.screen[self.x + dx][self.y + dy] == screen.bg:
+            if screen.screen[self.x + dx*self.speed][self.y + dy*self.speed] == screen.bg:
                 screen.screen[self.x][self.y] = screen.bg
                 self.x += dx*self.speed
                 self.y += dy*self.speed
