@@ -5,6 +5,7 @@ from colorama import init as cinit
 from colorama import Fore, Back, Style
 import random
 from time import monotonic as clock, sleep
+from barbarian import Barbarian
 from cannon import Cannon
 from king import King
 from hut import Hut
@@ -44,6 +45,11 @@ class Game:
         self.cannons = []
         for i in range(len(self.cannoncoords)):
             self.cannons.append(Cannon(self.cannoncoords[i][0],self.cannoncoords[i][1],self))
+
+        self.barbcoords = [[35,41]]
+        self.barbarians = []
+        for i in range(len(self.barbcoords)):
+            self.barbarians.append(Barbarian(self.barbcoords[i][0],self.barbcoords[i][1],self))
 
     def generateLine(self,x,y,L,m):
         p = []
@@ -108,6 +114,9 @@ class Game:
                 cannon.updateBuilding(self.screen)
                 cannon.updateCannons()
             self.townhall.updateBuilding(self.screen)
+            for barbarian in self.barbarians:
+                barbarian.updateBarb(self.screen)
+                barbarian.draw(self.screen.screen)
             self.updateColors()
             self.king.draw(self.screen.screen)
             self.check_game_over()
