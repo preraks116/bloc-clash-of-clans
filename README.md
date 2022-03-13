@@ -1,4 +1,5 @@
-#  Clash of Clans
+#  COC BLOC
+Block version of Clash of Clans
 
 ## Controls
 ### King's Movement
