@@ -11,6 +11,7 @@ from time import monotonic as clock, sleep
 from src.army.barbarian import Barbarian
 from src.buildings.cannon import Cannon
 from src.army.king import King
+from src.army.queen import Queen
 from src.buildings.hut import Hut
 from src.game.screen import Screen
 from src.buildings.wall import Wall
@@ -23,7 +24,7 @@ from src.utils.input import *
 cinit(autoreset=True)
 
 class Game:
-    def __init__(self):
+    def __init__(self, choice):
         # change stdout to null
         # sys.stdout = open(os.devnull, 'w')
         self.screen = Screen(50,100)
@@ -33,8 +34,8 @@ class Game:
         self.gamestate = 1
         self.gamewon  = False
         self.screens = []
+        self.character = choice
         self.time = 0
-
         self.load_level(self.gamestate)
 
     def load_level(self, lvlno):
@@ -48,10 +49,13 @@ class Game:
         with open(filename, 'r') as f:
             self.level = json.load(f)
         
-        self.rageSpell = self.level['game']['rageSpell']
-        self.healSpell = self.level['game']['healSpell']
 
-        self.king = King(self.level['person']['king']['x'],self.level['person']['king']['y'],self)
+        self.rageSpell = self.level['game']['spells']['rageSpell']
+        self.healSpell = self.level['game']['spells']['healSpell']
+        if self.character == 1:
+            self.king = King(self.level['person']['king']['x'],self.level['person']['king']['y'],self)
+        elif self.character == 2:
+            self.king = Queen(self.level['person']['king']['x'],self.level['person']['king']['y'],self)
 
         self.townhall = Townhall(self.level['building']['townhall']['x'],self.level['building']['townhall']['y'],self)
 
@@ -71,7 +75,6 @@ class Game:
         self.spawnPoints = []
         for i in range (0,len(self.level['building']['spawns'])):
             self.spawnPoints.append(SpawnPoint(self.level['building']['spawns'][i]['x'],self.level['building']['spawns'][i]['y'],self))
-
 
     def generateLine(self,x,y,L,m):
         p = []  
@@ -164,13 +167,17 @@ class Game:
             else:
                 bar += Fore.RED + "█ " + Style.RESET_ALL
         # print("Level: ", self.gamestate)
-        print("King's health: " , bar)
+        if self.character == 1:
+            print("King's health: " , bar)
+        elif self.character == 2:
+            print("Queen's health: " , bar)
         print("Heal Spells Left: ", self.healSpell)
         print("Rage Spells Left: ", self.rageSpell)
         print("Level: ", self.gamestate)
     
     def play(self):
         input__ = Get()
+
         while not self.game_over:
             # self.screen.clear()
             print('\033[0;0H')

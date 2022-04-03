@@ -1,10 +1,10 @@
 {
-    "game": 
-        {
+    "game": {
+        "spells" : {
             "rageSpell": 1,
             "healSpell": 1
         }
-    ,
+    },
     "person": {
         "king": {
             "x": 10,
