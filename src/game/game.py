@@ -222,7 +222,13 @@ class Game:
             print("You Win!")
         elif self.gamelost:
             print("You Lose!")
-        name = input("Enter file name: ")
-        with open('replays/' + name, 'wb') as f:
-            pickle.dump(self.screens,f)
+        input_char = input("Do you want to save the replay? [Y/n] : ")
+        if input_char == 'Y' or input_char == 'y' or input_char == '':
+            name = input("Enter file name: ")
+            with open('replays/' + name, 'wb') as f:
+                pickle.dump(self.screens,f)
+        elif input_char == 'n' or input_char == 'N':
+            pass
+        else:
+            print("Invalid input. Exiting.")
     
