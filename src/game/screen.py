@@ -16,6 +16,9 @@ class Screen:
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')
     
+    def clear_screen(self):
+        self.screen = np.array([[self.bg for i in range(self.width)] for j in range(self.height)])
+    
     def print(self):
         str = ""
         for i in range(self.height):

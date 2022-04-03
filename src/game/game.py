@@ -3,6 +3,7 @@ import numpy as np
 import sys
 import copy
 import pickle
+import json
 from colorama import init as cinit
 from colorama import Fore, Back, Style
 import random
@@ -29,41 +30,48 @@ class Game:
         self.framerate = 30
         self.game_over = False
         self.gamelost = False
+        self.gamestate = 1
         self.gamewon  = False
         self.screens = []
-
-        self.rageSpell = 1
-        self.healSpell = 1
-
-        self.king = King(10,10,self)
-
-        self.townhall = Townhall(30,30,self)
         self.time = 0
-        self.walls = []
-        self.walls += self.generateLine(20,20,20,1)
-        self.walls += self.generateLine(20,20,20,0)
-        self.walls += self.generateLine(40,20,20,1)
-        self.walls += self.generateLine(20,40,21,0)
 
-        self.hutscoords = [[15,15],[10,15],[15,80],[10,80],[15,45],[40,45],[45,10],[40,80]]
-        self.huts = []
-        for i in range(len(self.hutscoords)):
-            self.huts.append(Hut(self.hutscoords[i][0],self.hutscoords[i][1],self))
+        self.load_level(self.gamestate)
 
-        self.cannoncoords = [[23,25],[23,30],[43,25],[43,30],[33,25],[35,30]]
-        self.cannons = []
-        for i in range(len(self.cannoncoords)):
-            self.cannons.append(Cannon(self.cannoncoords[i][0],self.cannoncoords[i][1],self))
-
-        # self.barbcoords = [[35,41]]
-        self.barbarians = []
-        # for i in range(len(self.barbcoords)):
-        #     self.barbarians.append(Barbarian(self.barbcoords[i][0],self.barbcoords[i][1],self))
+    def load_level(self, lvlno):
+        self.screen.clear_screen()
+        if lvlno == 1:
+            filename = 'src/game/levels/one.json'
+        elif lvlno == 2:
+            filename = 'src/game/levels/two.json'
+        elif lvlno == 3:
+            filename = 'src/game/levels/three.json'
+        with open(filename, 'r') as f:
+            self.level = json.load(f)
         
+        self.rageSpell = self.level['game']['rageSpell']
+        self.healSpell = self.level['game']['healSpell']
+
+        self.king = King(self.level['person']['king']['x'],self.level['person']['king']['y'],self)
+
+        self.townhall = Townhall(self.level['building']['townhall']['x'],self.level['building']['townhall']['y'],self)
+
+        self.walls = []
+        for i in range (0,len(self.level['building']['walls'])):
+            self.walls += self.generateLine(self.level['building']['walls'][i]['x'],self.level['building']['walls'][i]['y'],self.level['building']['walls'][i]['length'],self.level['building']['walls'][i]['orientation'])
+        
+        self.huts = []
+        for i in range (0,len(self.level['building']['huts'])):
+            self.huts.append(Hut(self.level['building']['huts'][i]['x'],self.level['building']['huts'][i]['y'],self))
+        
+        self.cannons = []
+        for i in range (0,len(self.level['building']['cannons'])):
+            self.cannons.append(Cannon(self.level['building']['cannons'][i]['x'],self.level['building']['cannons'][i]['y'],self))
+
+        self.barbarians = []
         self.spawnPoints = []
-        self.spawncoords = [[48,50], [48,40], [48,30]]
-        for i in range(len(self.spawncoords)):
-            self.spawnPoints.append(SpawnPoint(self.spawncoords[i][0],self.spawncoords[i][1],self))
+        for i in range (0,len(self.level['building']['spawns'])):
+            self.spawnPoints.append(SpawnPoint(self.level['building']['spawns'][i]['x'],self.level['building']['spawns'][i]['y'],self))
+
 
     def generateLine(self,x,y,L,m):
         p = []  
@@ -72,7 +80,6 @@ class Game:
                 p.append(Wall(x,y+i,self))
             elif m == 0:
                 p.append(Wall(x+i,y,self))
-        
         return p
 
     def updateColors(self):
@@ -127,7 +134,7 @@ class Game:
                 return
         self.game_over = True    
         self.gamelost = True
-        print("GAME OVER")
+        print("GAME OVER!")
 
     def check_game_win(self):
         # check if all buildings are destroyed 
@@ -139,8 +146,12 @@ class Game:
                 return
         if not self.townhall.isBroken:
             return
-        self.game_over = True
-        self.gamewon = True
+        self.gamestate += 1
+        if self.gamestate > 3:
+            self.game_over = True
+            self.gamewon = True
+            return
+        self.load_level(self.gamestate)
 
     def updateHUD(self):
         # using kings health to print a health bar 
@@ -152,9 +163,11 @@ class Game:
                 bar += Fore.GREEN + "█ " + Style.RESET_ALL
             else:
                 bar += Fore.RED + "█ " + Style.RESET_ALL
+        # print("Level: ", self.gamestate)
         print("King's health: " , bar)
         print("Heal Spells Left: ", self.healSpell)
         print("Rage Spells Left: ", self.rageSpell)
+        print("Level: ", self.gamestate)
     
     def play(self):
         input__ = Get()

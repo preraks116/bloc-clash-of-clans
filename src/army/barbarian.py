@@ -59,13 +59,12 @@ class Barbarian(Person):
                 nearest = wall
             
         return nearest
-    
+    ##?? add feature where barbarian starts looking for next building if the building breaks while he is walking to it 
     def updateBarb(self,screen):
         if not self.isDead and self.game.time % self.cooldown == 0:
             if self.nearestBuilding is None:
                 self.getNearestBuilding()
                 if self.nearestBuilding is None:
-                    self.game.game_over = True
                     return
             if not self.checkCollision(self.nearestBuilding):
                 hasStopped = 1

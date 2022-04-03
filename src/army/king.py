@@ -33,6 +33,7 @@ class King(Person):
                 screen.screen[self.x][self.y] = screen.bg
                 self.x += dx*self.speed
                 self.y += dy*self.speed
+                # print(self.x, " ", self.y, file=sys.stderr)
 
         if not self.isDead and ch == ' ':
 
