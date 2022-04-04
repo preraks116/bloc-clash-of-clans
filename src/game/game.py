@@ -10,6 +10,7 @@ import random
 from time import monotonic as clock, sleep
 from src.army.troops.barbarian import Barbarian
 from src.buildings.attacking.cannon import Cannon
+from src.buildings.attacking.wizardtower import WizardTower
 from src.army.character.king import King
 from src.army.character.queen import Queen
 from src.buildings.defending.hut import Hut
@@ -66,6 +67,11 @@ class Game:
         for i in range (0,len(wallsdata)):
             self.walls += self.generateLine(wallsdata[i]['x'],wallsdata[i]['y'],wallsdata[i]['length'],wallsdata[i]['orientation'])
         
+        self.wizardtowers = []
+        wizardtowersdata = self.level['building']['wizardtowers']
+        for i in range (0,len(wizardtowersdata)):
+            self.wizardtowers.append(WizardTower(wizardtowersdata[i]['x'],wizardtowersdata[i]['y'],self))
+        
         self.huts = []
         hutsdata = self.level['building']['huts']
         for i in range (0,len(hutsdata)):
@@ -102,6 +108,9 @@ class Game:
 
         for cannon in self.cannons:
             cannon.updateColors()
+        
+        for tower in self.wizardtowers:
+            tower.updateColors()
 
         self.townhall.updateColors()
 
@@ -124,6 +133,9 @@ class Game:
         for cannon in self.cannons:
             cannon.updateBuilding(self.screen)
             cannon.updateCannons()
+        for tower in self.wizardtowers:
+            tower.updateBuilding(self.screen)
+            tower.updateTowers()
         self.townhall.updateBuilding(self.screen)
     
     def updateArmy(self):
@@ -163,6 +175,9 @@ class Game:
                 return
         for cannon in self.cannons:
             if not cannon.isBroken:
+                return
+        for tower in self.wizardtowers:
+            if not tower.isBroken:
                 return
         if not self.townhall.isBroken:
             return

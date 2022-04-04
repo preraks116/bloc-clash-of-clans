@@ -34,6 +34,12 @@ class Balloon(Person):
                 if dist < maxdist:
                     maxdist = dist
                     nearest = cannon
+        for tower in self.game.wizardtowers:
+            if not tower.isBroken:
+                dist = self.getDistance(tower)
+                if dist < maxdist:
+                    maxdist = dist
+                    nearest = tower
         # wont go beyond this if a cannon is found
         # wizard tower will come above this
         if not nearest is None:
