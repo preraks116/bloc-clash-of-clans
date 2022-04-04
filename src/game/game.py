@@ -107,6 +107,23 @@ class Game:
 
         for barbarian in self.barbarians:
             barbarian.updateColors()
+    
+    def updateBuildings(self):
+        for wall in self.walls:
+            wall.updateBuilding(self.screen)
+        for hut in self.huts:
+            hut.updateBuilding(self.screen)
+        for cannon in self.cannons:
+            cannon.updateBuilding(self.screen)
+            cannon.updateCannons()
+        self.townhall.updateBuilding(self.screen)
+    
+    def updateArmy(self):
+        for barbarian in self.barbarians:
+            barbarian.updateBarb(self.screen)
+            barbarian.draw(self.screen.screen)
+        for spawnPoint in self.spawnPoints:
+            spawnPoint.updateBuilding(self.screen)
 
     def check_game_over(self):
         # check here for all barbarians dead as well
@@ -194,30 +211,21 @@ class Game:
                 else:
                     self.king.updateMove(self.screen, ch)
             
-            # self.wall.updateWall(self.screen)
             self.check_game_over()
             self.check_game_win()
-            for wall in self.walls:
-                wall.updateBuilding(self.screen)
-            for hut in self.huts:
-                hut.updateBuilding(self.screen)
-            for cannon in self.cannons:
-                cannon.updateBuilding(self.screen)
-                cannon.updateCannons()
-            self.townhall.updateBuilding(self.screen)
-            for barbarian in self.barbarians:
-                barbarian.updateBarb(self.screen)
-                barbarian.draw(self.screen.screen)
-            for spawnPoint in self.spawnPoints:
-                spawnPoint.updateBuilding(self.screen)
+            self.updateBuildings()
+            self.updateArmy()
             self.updateColors()
             self.king.draw(self.screen.screen)
+
             self.screens.append(copy.deepcopy(self.screen.screen))
             self.screen.print()
+
             self.updateHUD()
+            
             self.time += 1
-            # print(self.time, file=sys.stderr)
             sleep(1/self.framerate)
+
         self.screen.clear()
         if self.gamewon:
             print("You Win!")
