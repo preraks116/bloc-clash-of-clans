@@ -7,7 +7,7 @@ import random
 import time
 import sys
 from src.buildings.building import Building
-from src.army.barbarian import Barbarian
+from src.army.troops.barbarian import Barbarian
 
 class SpawnPoint(Building):
     def __init__(self, x,y, game):

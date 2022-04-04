@@ -8,15 +8,15 @@ from colorama import init as cinit
 from colorama import Fore, Back, Style
 import random
 from time import monotonic as clock, sleep
-from src.army.barbarian import Barbarian
-from src.buildings.cannon import Cannon
-from src.army.king import King
-from src.army.queen import Queen
-from src.buildings.hut import Hut
+from src.army.troops.barbarian import Barbarian
+from src.buildings.attacking.cannon import Cannon
+from src.army.character.king import King
+from src.army.character.queen import Queen
+from src.buildings.defending.hut import Hut
 from src.game.screen import Screen
-from src.buildings.wall import Wall
-from src.buildings.townhall import Townhall
-from src.buildings.spawnpoint import SpawnPoint
+from src.buildings.defending.wall import Wall
+from src.buildings.defending.townhall import Townhall
+from src.buildings.attacking.spawnpoint import SpawnPoint
 from src.utils.input import *
 
 # \033[0;0H
