@@ -9,6 +9,7 @@ import sys
 from src.buildings.building import Building
 from src.army.troops.barbarian import Barbarian
 from src.army.troops.archer import Archer
+from src.army.troops.balloon import Balloon
 
 class SpawnPoint(Building):
     def __init__(self, x,y, game):
@@ -25,6 +26,10 @@ class SpawnPoint(Building):
     def spawnArch(self, archers):
         archer = Archer(self.x-1,self.y,self.game)
         archers.append(archer)
+    
+    def spawnBalloon(self, balloons):
+        balloon = Balloon(self.x-1,self.y,self.game)
+        balloons.append(balloon)
     # def updateWall(self, screen):
     #     if self.isBroken == False:
     #         screen.screen[self.x][self.y] = self.ch

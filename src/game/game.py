@@ -78,6 +78,7 @@ class Game:
 
         self.barbarians = []
         self.archers = []
+        self.balloons = []
         self.spawnPoints = []
         spawnpointsdata = self.level['building']['spawns']
         for i in range (0,len(spawnpointsdata)):
@@ -111,6 +112,9 @@ class Game:
         
         for archer in self.archers:
             archer.updateColors()
+        
+        for balloon in self.balloons:
+            balloon.updateColors()
     
     def updateBuildings(self):
         for wall in self.walls:
@@ -129,6 +133,9 @@ class Game:
         for archer in self.archers:
             archer.updateArcher(self.screen)
             archer.draw(self.screen.screen)
+        for balloon in self.balloons:
+            balloon.updateBalloon(self.screen)
+            balloon.draw(self.screen.screen)
         for spawnPoint in self.spawnPoints:
             spawnPoint.updateBuilding(self.screen)
 
@@ -141,6 +148,9 @@ class Game:
                 return
         for archer in self.archers:
             if not archer.isDead:
+                return
+        for balloon in self.balloons:
+            if not balloon.isDead:
                 return
         self.game_over = True    
         self.gamelost = True
@@ -206,6 +216,12 @@ class Game:
                     self.spawnPoints[1].spawnArch(self.archers)
                 elif ch == '6':
                     self.spawnPoints[2].spawnArch(self.archers)
+                elif ch == '7':
+                    self.spawnPoints[0].spawnBalloon(self.balloons)
+                elif ch == '8':
+                    self.spawnPoints[1].spawnBalloon(self.balloons)
+                elif ch == '9':
+                    self.spawnPoints[2].spawnBalloon(self.balloons)
                 elif ch == 'r':
                     if self.rageSpell:
                         self.rageSpell = 0
@@ -214,6 +230,12 @@ class Game:
                         for barbarian in self.barbarians:
                             barbarian.attack *= 2
                             barbarian.cooldown /= 2
+                        for archer in self.archers:
+                            archer.attack *= 2
+                            archer.cooldown /= 2
+                        for balloon in self.balloons:
+                            balloon.attack *= 2
+                            balloon.cooldown /= 2
                 elif ch == 'h':
                     if self.healSpell:
                         self.healSpell = 0
@@ -224,6 +246,14 @@ class Game:
                             barbarian.health *= 1.5
                             if barbarian.health > barbarian.maxHealth:
                                 barbarian.health = barbarian.maxHealth
+                        for archer in self.archers:
+                            archer.health *= 1.5
+                            if archer.health > archer.maxHealth:
+                                archer.health = archer.maxHealth
+                        for balloon in self.balloons:
+                            balloon.health *= 1.5
+                            if balloon.health > balloon.maxHealth:
+                                balloon.health = balloon.maxHealth
                 else:
                     self.king.updateMove(self.screen, ch)
             
