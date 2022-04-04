@@ -1,10 +1,10 @@
 {
-    "game": 
-        {
+    "game": {
+        "spells" : {
             "rageSpell": 1,
             "healSpell": 1
         }
-    ,
+    },
     "person": {
         "king": {
             "x": 10,
@@ -40,6 +40,16 @@
                 "y": 40,
                 "length": 21,
                 "orientation": 0
+            }
+        ],
+        "wizardtowers": [
+            {
+                "x": 25,
+                "y": 25
+            },
+            {
+                "x": 35,
+                "y": 35
             }
         ],
         "huts": [

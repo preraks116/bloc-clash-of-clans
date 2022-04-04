@@ -17,7 +17,7 @@ movementKeys = {
 
 class Queen(Person):
     def __init__(self, x, y, game):
-        super().__init__(x, y, 'Q', Back.BLACK, game)
+        super().__init__(x, y, 100,65,25, 'Q', Back.BLACK, game)
         self.maxHealth = 100
         self.health = self.maxHealth
         self.attack = 10
