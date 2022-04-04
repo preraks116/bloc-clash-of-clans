@@ -10,8 +10,8 @@ from src.buildings.building import Building
 
 class Cannon(Building):
     def __init__(self, x,y, game):
-        super().__init__(x,y,1,1,'C',Back.GREEN, game)
-        self.health = 25
+        super().__init__(x,y,1,1,25,15,5,'C',Back.GREEN, game)
+        # self.health = 25
         self.attack = 5
         self.cooldown = 8
         self.range = 5  

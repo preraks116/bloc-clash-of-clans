@@ -10,9 +10,9 @@ from src.army.person import Person
 
 class Barbarian(Person):
     def __init__(self, x, y, game):
-        super().__init__(x, y, 'B', Back.BLACK, game)
-        self.maxHealth = 20
-        self.health = self.maxHealth
+        super().__init__(x, y, 20, 10, 5, 'B', Back.BLACK, game)
+        # self.maxHealth = 20
+        # self.health = self.maxHealth
         self.attack = 5
         self.speed = 1
         self.cooldown = 3

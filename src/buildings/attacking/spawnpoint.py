@@ -11,7 +11,7 @@ from src.army.troops.barbarian import Barbarian
 
 class SpawnPoint(Building):
     def __init__(self, x,y, game):
-        super().__init__(x,y,1,1,'S',Back.BLACK, game)
+        super().__init__(x,y,1,1,10,10,10,'S',Back.BLACK, game)
         
     def updateBuilding(self, screen):
         self.draw(screen.screen, self.color + self.ch + Back.RESET)

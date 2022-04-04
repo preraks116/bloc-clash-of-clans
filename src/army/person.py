@@ -8,12 +8,40 @@ import time
 import sys
 
 class Person:
-    def __init__(self, x, y, ch, color, game):
+    def __init__(self, x, y, maxhealth, midhealth, lowhealth, ch, color, game):
         self.x = x
+        self.maxHealth = maxhealth
+        self.health = maxhealth
+        self.healthcolors = {
+            'max': {
+                'value': maxhealth, 
+                'color': Back.BLACK
+            },
+            'mid': {
+                'value': midhealth, 
+                'color': Back.LIGHTMAGENTA_EX
+            },
+            'low': {
+                'value': lowhealth, 
+                'color': Back.LIGHTYELLOW_EX
+            }, 
+            'dead': {
+                'value': 0, 
+                'color': Back.WHITE
+            }
+        }
         self.y = y
         self.color = color
         self.ch = ch
         self.game = game
+    
+    def updateColors(self):
+        if self.health <= self.healthcolors['mid']['value']:
+            self.color = self.healthcolors['mid']['color']
+        if self.health <= self.healthcolors['low']['value']:
+            self.color = self.healthcolors['low']['color']
+        if self.health <= self.healthcolors['dead']['value']:
+            self.color = self.healthcolors['dead']['color']
 
     def registerHit(self,building):
         building.health -= self.attack

@@ -49,32 +49,38 @@ class Game:
         with open(filename, 'r') as f:
             self.level = json.load(f)
         
-
         self.rageSpell = self.level['game']['spells']['rageSpell']
         self.healSpell = self.level['game']['spells']['healSpell']
         if self.character == 1:
-            self.king = King(self.level['person']['king']['x'],self.level['person']['king']['y'],self)
+            kingdata = self.level['person']['king']
+            self.king = King(kingdata['x'],kingdata['y'],self)
         elif self.character == 2:
-            self.king = Queen(self.level['person']['king']['x'],self.level['person']['king']['y'],self)
+            queendata = self.level['person']['king']
+            self.king = Queen(queendata['x'],queendata['y'],self)
 
-        self.townhall = Townhall(self.level['building']['townhall']['x'],self.level['building']['townhall']['y'],self)
+        halldata = self.level['building']['townhall']
+        self.townhall = Townhall(halldata['x'],halldata['y'],self)
 
         self.walls = []
-        for i in range (0,len(self.level['building']['walls'])):
-            self.walls += self.generateLine(self.level['building']['walls'][i]['x'],self.level['building']['walls'][i]['y'],self.level['building']['walls'][i]['length'],self.level['building']['walls'][i]['orientation'])
+        wallsdata = self.level['building']['walls']
+        for i in range (0,len(wallsdata)):
+            self.walls += self.generateLine(wallsdata[i]['x'],wallsdata[i]['y'],wallsdata[i]['length'],wallsdata[i]['orientation'])
         
         self.huts = []
-        for i in range (0,len(self.level['building']['huts'])):
-            self.huts.append(Hut(self.level['building']['huts'][i]['x'],self.level['building']['huts'][i]['y'],self))
+        hutsdata = self.level['building']['huts']
+        for i in range (0,len(hutsdata)):
+            self.huts.append(Hut(hutsdata[i]['x'],hutsdata[i]['y'],self))
         
         self.cannons = []
-        for i in range (0,len(self.level['building']['cannons'])):
-            self.cannons.append(Cannon(self.level['building']['cannons'][i]['x'],self.level['building']['cannons'][i]['y'],self))
+        cannonsdata = self.level['building']['cannons']
+        for i in range (0,len(cannonsdata)):
+            self.cannons.append(Cannon(cannonsdata[i]['x'],cannonsdata[i]['y'],self))
 
         self.barbarians = []
         self.spawnPoints = []
-        for i in range (0,len(self.level['building']['spawns'])):
-            self.spawnPoints.append(SpawnPoint(self.level['building']['spawns'][i]['x'],self.level['building']['spawns'][i]['y'],self))
+        spawnpointsdata = self.level['building']['spawns']
+        for i in range (0,len(spawnpointsdata)):
+            self.spawnPoints.append(SpawnPoint(spawnpointsdata[i]['x'],spawnpointsdata[i]['y'],self))
 
     def generateLine(self,x,y,L,m):
         p = []  
@@ -87,46 +93,20 @@ class Game:
 
     def updateColors(self):
         for wall in self.walls:
-            if wall.health <= 25:
-                wall.color = Back.YELLOW
-            if wall.health <= 15:
-                wall.color = Back.RED
+            wall.updateColors()
 
         for hut in self.huts:
-            if hut.health <= 25:
-                hut.color = Back.YELLOW
-            if hut.health <= 15:
-                hut.color = Back.RED
+            hut.updateColors()
 
         for cannon in self.cannons:
-            if cannon.health <= 15:
-                cannon.color = Back.YELLOW
-            if cannon.health <= 5:
-                cannon.color = Back.RED
+            cannon.updateColors()
 
-        if self.townhall.health <= 65:
-            self.townhall.color = Back.YELLOW
-        if self.townhall.health <= 25:
-            self.townhall.color = Back.RED
+        self.townhall.updateColors()
 
-        if self.king.health <= self.king.maxHealth:
-            self.king.color = Back.BLACK
-        if self.king.health <= 65:
-            self.king.color = Back.LIGHTMAGENTA_EX
-        if self.king.health <= 25:
-            self.king.color = Back.LIGHTYELLOW_EX
-        if self.king.health <= 0:
-            self.king.color = Back.WHITE
+        self.king.updateColors()
 
         for barbarian in self.barbarians:
-            if barbarian.health <= barbarian.maxHealth:
-                barbarian.color = Back.BLACK
-            if barbarian.health <= 10:
-                barbarian.color = Back.LIGHTMAGENTA_EX
-            if barbarian.health <= 5:
-                barbarian.color = Back.LIGHTYELLOW_EX
-            if barbarian.health <= 0:
-                barbarian.color = Back.WHITE
+            barbarian.updateColors()
 
     def check_game_over(self):
         # check here for all barbarians dead as well

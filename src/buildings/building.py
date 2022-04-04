@@ -8,7 +8,7 @@ import time
 import sys
 
 class Building:
-    def __init__(self, x, y, size_x, size_y, ch, color, game):
+    def __init__(self, x, y, size_x, size_y, health, midhealth, lowhealth, ch, color, game):
         self.x = x
         self.y = y
         # self.size = size
@@ -18,11 +18,22 @@ class Building:
         self.ch = ch
         self.isBroken = False
         self.game = game
+        self.health = health
+        self.midhealth = {'value': midhealth, 'color': Back.YELLOW}
+        self.lowhealth = {'value': lowhealth, 'color': Back.RED}
+
+    def updateColors(self):
+        if self.health <= self.midhealth['value']:
+            self.color = self.midhealth['color']
+        if self.health <= self.lowhealth['value']:
+            self.color = self.lowhealth['color']
 
     def draw(self, screen, ch):
         for y in range(self.size_y):
             for x in range(self.size_x):
                 screen[self.x + x][self.y + y] = ch
+    
+    
     
     def updateBuilding(self, screen):
         if self.isBroken == False:

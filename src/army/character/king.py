@@ -17,9 +17,9 @@ movementKeys = {
 
 class King(Person):
     def __init__(self, x, y, game):
-        super().__init__(x, y, 'K', Back.BLACK, game)
-        self.maxHealth = 100
-        self.health = self.maxHealth
+        super().__init__(x, y, 100, 65, 25,'K', Back.BLACK, game)
+        # self.maxHealth = 100
+        # self.health = self.maxHealth
         self.attack = 15
         self.speed = 1
         self.isDead = False
