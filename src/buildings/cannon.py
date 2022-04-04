@@ -17,9 +17,12 @@ class Cannon(Building):
         self.range = 5  
         # self.isBroken = False
     
+    def inRange(self, person):
+        return abs(person.x - self.x) + abs(person.y - self.y) <= self.range
+    
     def updateCannons(self):
         # check if king is close to the cannon
-        if not self.isBroken and not self.game.king.isDead and abs(self.game.king.x - self.x) + abs(self.game.king.y - self.y) <= self.range and self.game.time % self.cooldown == 0:
+        if not self.isBroken and not self.game.king.isDead and self.inRange(self.game.king) and self.game.time % self.cooldown == 0:
             self.game.king.health -= self.attack
             # print("Cannon hit the king: ",self.game.king.health, file=sys.stderr)
             if self.game.king.health <= 0:

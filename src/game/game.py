@@ -238,6 +238,7 @@ class Game:
             self.time += 1
             # print(self.time, file=sys.stderr)
             sleep(1/self.framerate)
+        self.screen.clear()
         if self.gamewon:
             print("You Win!")
         elif self.gamelost:
