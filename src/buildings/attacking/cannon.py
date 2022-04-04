@@ -1,3 +1,4 @@
+from __future__ import barry_as_FLUFL
 import os
 import numpy as np
 from colorama import init as cinit
@@ -30,14 +31,24 @@ class Cannon(Building):
     
         # for loop for attacking all the barbarians, add a break after the first iteration because we only want to attack one
         for barbarian in self.game.barbarians:
-            if not barbarian.isDead and not self.isBroken and abs(barbarian.x - self.x) + abs(barbarian.y - self.y) <= self.range and self.game.time % self.cooldown == 0:
+            if not barbarian.isDead and not self.isBroken and self.inRange(barbarian) and self.game.time % self.cooldown == 0:
                 barbarian.health -= self.attack
                 # add indication that the barb is getting attacked
                 # print("Cannon hit the barbarian: ",barbarian.health, file=sys.stderr)
                 if barbarian.health <= 0:
                     barbarian.isDead = True
                 break
-            
+        
+        # for look for attacking all the archers
+        for archer in self.game.archers:
+            if not archer.isDead and not self.isBroken and self.inRange(archer) and self.game.time % self.cooldown == 0:
+                archer.health -= self.attack
+                # add indication that the archer is getting attacked
+                # print("Cannon hit the archer: ",archer.health, file=sys.stderr)
+                if archer.health <= 0:
+                    archer.isDead = True
+                break
+
     # def updateWall(self, screen):
     #     if self.isBroken == False:
     #         screen.screen[self.x][self.y] = self.ch

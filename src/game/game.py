@@ -77,6 +77,7 @@ class Game:
             self.cannons.append(Cannon(cannonsdata[i]['x'],cannonsdata[i]['y'],self))
 
         self.barbarians = []
+        self.archers = []
         self.spawnPoints = []
         spawnpointsdata = self.level['building']['spawns']
         for i in range (0,len(spawnpointsdata)):
@@ -107,6 +108,9 @@ class Game:
 
         for barbarian in self.barbarians:
             barbarian.updateColors()
+        
+        for archer in self.archers:
+            archer.updateColors()
     
     def updateBuildings(self):
         for wall in self.walls:
@@ -122,6 +126,9 @@ class Game:
         for barbarian in self.barbarians:
             barbarian.updateBarb(self.screen)
             barbarian.draw(self.screen.screen)
+        for archer in self.archers:
+            archer.updateArcher(self.screen)
+            archer.draw(self.screen.screen)
         for spawnPoint in self.spawnPoints:
             spawnPoint.updateBuilding(self.screen)
 
@@ -131,6 +138,9 @@ class Game:
             return
         for barbarian in self.barbarians:
             if not barbarian.isDead:
+                return
+        for archer in self.archers:
+            if not archer.isDead:
                 return
         self.game_over = True    
         self.gamelost = True
@@ -190,6 +200,12 @@ class Game:
                     self.spawnPoints[1].spawnBarb(self.barbarians)
                 elif ch == '3':
                     self.spawnPoints[2].spawnBarb(self.barbarians)
+                elif ch == '4':
+                    self.spawnPoints[0].spawnArch(self.archers)
+                elif ch == '5':
+                    self.spawnPoints[1].spawnArch(self.archers)
+                elif ch == '6':
+                    self.spawnPoints[2].spawnArch(self.archers)
                 elif ch == 'r':
                     if self.rageSpell:
                         self.rageSpell = 0
@@ -222,7 +238,7 @@ class Game:
             self.screen.print()
 
             self.updateHUD()
-            
+
             self.time += 1
             sleep(1/self.framerate)
 

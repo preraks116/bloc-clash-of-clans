@@ -8,17 +8,18 @@ import time
 import sys
 from src.army.person import Person
 
-class Barbarian(Person):
+class Archer(Person):
     def __init__(self, x, y, game):
-        super().__init__(x, y, 20, 10, 5, 'B', Back.BLACK, game)
+        super().__init__(x, y, 10, 5, 2, 'A', Back.BLACK, game)
         # self.maxHealth = 20
         # self.health = self.maxHealth
-        self.attack = 6
+        self.attack = 3
         self.speed = 1
         self.cooldown = 3
         self.isDead = False
         self.nearestBuilding = None
-        self.cooldown = 2
+        self.cooldown = 1
+        self.range = 6
 
     def getDistance(self, building):
         return (abs(self.x - building.x) + abs(self.y - building.y))
@@ -59,14 +60,21 @@ class Barbarian(Person):
                 nearest = wall
             
         return nearest
+    
+    # check if the building is in range
+    def inRange(self, building):
+        if self.getDistance(building) <= self.range:
+            return True
+        return False
+
     ##?? add feature where barbarian starts looking for next building if the building breaks while he is walking to it 
-    def updateBarb(self,screen):
+    def updateArcher(self,screen):
         if not self.isDead and self.game.time % self.cooldown == 0:
             if self.nearestBuilding is None:
                 self.getNearestBuilding()
                 if self.nearestBuilding is None:
                     return
-            if not self.checkCollision(self.nearestBuilding):
+            if not self.inRange(self.nearestBuilding):
                 hasStopped = 1
                 screen.screen[self.x][self.y] = screen.bg
                 if self.x < self.nearestBuilding.x and (screen.screen[self.x + 1][self.y] == screen.bg or screen.screen[self.x + 1][self.y][5] == self.ch):
@@ -87,7 +95,7 @@ class Barbarian(Person):
                     wall = self.getNearestWall()
                     if wall is not None:
                         # print(self.getDistance(wall),file=sys.stderr)
-                        if self.getDistance(wall) == 1:
+                        if self.inRange(wall):
                             self.registerHit(wall)
                         else:
                             self.getNearestBuilding()                
