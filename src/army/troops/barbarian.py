@@ -39,6 +39,13 @@ class Barbarian(Person):
             maxdist = dist
             nearest = self.game.townhall
         
+        for tower in self.game.wizardtowers:
+            if not tower.isBroken:
+                dist = self.getDistance(tower)
+                if dist < maxdist:
+                    maxdist = dist
+                    nearest = tower
+        
         for cannon in self.game.cannons:
             if not cannon.isBroken:
                 dist = self.getDistance(cannon)

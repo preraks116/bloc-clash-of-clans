@@ -62,6 +62,14 @@ class Game:
         halldata = self.level['building']['townhall']
         self.townhall = Townhall(halldata['x'],halldata['y'],self)
 
+        limitdata = self.level['game']['limits']
+
+        self.troop_limits = {
+            "barbarian": limitdata['barbarian'],
+            "archer": limitdata['archer'],
+            "balloon": limitdata['balloon']
+        }
+
         self.walls = []
         wallsdata = self.level['building']['walls']
         for i in range (0,len(wallsdata)):
@@ -205,6 +213,9 @@ class Game:
             print("Queen's health: " , bar)
         print("Heal Spells Left: ", self.healSpell)
         print("Rage Spells Left: ", self.rageSpell)
+        print("Barbarians Left:", self.troop_limits['barbarian'])
+        print("Archers Left:", self.troop_limits['archer'])
+        print("Balloons Left:", self.troop_limits['balloon'])
         print("Level: ", self.gamestate)
     
     def play(self):
@@ -220,23 +231,41 @@ class Game:
                 if ch == 'q':
                     self.game_over = True
                 elif ch == '1':
-                    self.spawnPoints[0].spawnBarb(self.barbarians)
+                    if self.troop_limits['barbarian'] != 0:
+                        self.spawnPoints[0].spawnBarb(self.barbarians)
+                        self.troop_limits['barbarian'] -= 1
                 elif ch == '2':
-                    self.spawnPoints[1].spawnBarb(self.barbarians)
+                    if self.troop_limits['barbarian'] != 0:
+                        self.spawnPoints[1].spawnBarb(self.barbarians)
+                        self.troop_limits['barbarian'] -= 1
                 elif ch == '3':
-                    self.spawnPoints[2].spawnBarb(self.barbarians)
+                    if self.troop_limits['barbarian'] != 0:
+                        self.spawnPoints[2].spawnBarb(self.barbarians)
+                        self.troop_limits['barbarian'] -= 1
                 elif ch == '4':
-                    self.spawnPoints[0].spawnArch(self.archers)
+                    if self.troop_limits['archer'] != 0:
+                        self.spawnPoints[0].spawnArch(self.archers)
+                        self.troop_limits['archer'] -= 1
                 elif ch == '5':
-                    self.spawnPoints[1].spawnArch(self.archers)
+                    if self.troop_limits['archer'] != 0:
+                        self.spawnPoints[1].spawnArch(self.archers)
+                        self.troop_limits['archer'] -= 1
                 elif ch == '6':
-                    self.spawnPoints[2].spawnArch(self.archers)
+                    if self.troop_limits['archer'] != 0:
+                        self.spawnPoints[2].spawnArch(self.archers)
+                        self.troop_limits['archer'] -= 1
                 elif ch == '7':
-                    self.spawnPoints[0].spawnBalloon(self.balloons)
+                    if self.troop_limits['balloon'] != 0:
+                        self.spawnPoints[0].spawnBalloon(self.balloons)
+                        self.troop_limits['balloon'] -= 1
                 elif ch == '8':
-                    self.spawnPoints[1].spawnBalloon(self.balloons)
+                    if self.troop_limits['balloon'] != 0:
+                        self.spawnPoints[1].spawnBalloon(self.balloons)
+                        self.troop_limits['balloon'] -= 1
                 elif ch == '9':
-                    self.spawnPoints[2].spawnBalloon(self.balloons)
+                    if self.troop_limits['balloon'] != 0:
+                        self.spawnPoints[2].spawnBalloon(self.balloons)
+                        self.troop_limits['balloon'] -= 1
                 elif ch == 'r':
                     if self.rageSpell:
                         self.rageSpell = 0

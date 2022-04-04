@@ -3,6 +3,11 @@
         "spells" : {
             "rageSpell": 1,
             "healSpell": 1
+        },
+        "limits": {
+            "barbarian": 6,
+            "archer": 3,
+            "balloon": 2
         }
     },
     "person": {
