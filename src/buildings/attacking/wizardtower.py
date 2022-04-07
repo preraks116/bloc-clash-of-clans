@@ -18,45 +18,47 @@ class WizardTower(Building):
         self.range = 5  
         # self.isBroken = False
     
-    def inRange(self, person):
-        return abs(person.x - self.x) + abs(person.y - self.y) <= self.range
+    # manhattan distance
+    def inRange(self, person, thing, range):
+        return abs(person.x - thing.x) + abs(person.y - thing.y) <= range
+    
+    # just checks if the building is next to target
+    def isNextTo(self, target, origin):
+        return abs(origin.x - target.x) <= 1 and abs(origin.y - target.y) <= 1
+    
+    def registerAOE(self, troops, origin):
+        for troop in troops:
+            if not troop.isDead and not origin.isDead and self.isNextTo(troop, origin):
+                print("AOE registered: ",troop.health, file=sys.stderr)
+                troop.health -= self.attack
+                if troop.health <= 0:
+                    troop.isDead = True
+                    # print("AOE hit a troop: ",troop.health, file=sys.stderr)
+    
+    def attackTroop(self, troops):
+        for troop in troops:
+            if not troop.isDead and not self.isBroken and self.inRange(troop, self, self.range) and self.game.time % self.cooldown == 0:
+                troop.health -= self.attack
+                # add indication that the barb is getting attacked
+                # print("Cannon hit the troop: ",troop.health, file=sys.stderr)
+                if troop.health <= 0:
+                    troop.isDead = True
+                self.registerAOE(self.game.barbarians, troop)
+                self.registerAOE(self.game.archers, troop)
+                self.registerAOE(self.game.balloons, troop)
+                break
     
     def updateTowers(self):
         # check if king is close to the cannon
-        if not self.isBroken and not self.game.king.isDead and self.inRange(self.game.king) and self.game.time % self.cooldown == 0:
+        if not self.isBroken and not self.game.king.isDead and self.inRange(self.game.king, self, self.range) and self.game.time % self.cooldown == 0:
             self.game.king.health -= self.attack
             # print("Cannon hit the king: ",self.game.king.health, file=sys.stderr)
             if self.game.king.health <= 0:
                 self.game.king.isDead = True
     
-        # for loop for attacking all the barbarians, add a break after the first iteration because we only want to attack one
-        for barbarian in self.game.barbarians:
-            if not barbarian.isDead and not self.isBroken and self.inRange(barbarian) and self.game.time % self.cooldown == 0:
-                barbarian.health -= self.attack
-                # add indication that the barb is getting attacked
-                # print("Cannon hit the barbarian: ",barbarian.health, file=sys.stderr)
-                if barbarian.health <= 0:
-                    barbarian.isDead = True
-                break
-        
-        # for look for attacking all the archers
-        for archer in self.game.archers:
-            if not archer.isDead and not self.isBroken and self.inRange(archer) and self.game.time % self.cooldown == 0:
-                archer.health -= self.attack
-                # add indication that the archer is getting attacked
-                # print("Cannon hit the archer: ",archer.health, file=sys.stderr)
-                if archer.health <= 0:
-                    archer.isDead = True
-                break
-        
-        for balloon in self.game.balloons:
-            if not balloon.isDead and not self.isBroken and self.inRange(balloon) and self.game.time % self.cooldown == 0:
-                balloon.health -= self.attack
-                # add indication that the balloon is getting attacked
-                # print("Cannon hit the balloon: ",balloon.health, file=sys.stderr)
-                if balloon.health <= 0:
-                    balloon.isDead = True
-                break
+        self.attackTroop(self.game.barbarians)
+        self.attackTroop(self.game.archers)
+        self.attackTroop(self.game.balloons)
 
     # def updateWall(self, screen):
     #     if self.isBroken == False:
