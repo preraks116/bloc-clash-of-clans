@@ -26,6 +26,7 @@ class King(Person):
         self.cooldown = 2
     
     def updateMove(self, screen, ch):
+        ch = ch.lower()
         if not self.isDead and ch in movementKeys and self.game.time % self.cooldown == 0:
             dx, dy = movementKeys[ch]
             # print(screen.screen[self.x + dx][self.y + dy], file=sys.stderr)
