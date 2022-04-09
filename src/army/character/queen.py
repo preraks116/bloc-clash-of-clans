@@ -54,7 +54,10 @@ class Queen(Person):
             for building in self.game.huts:
                 if not building.isBroken and self.inRange(building):
                     self.registerHit(building)
-
+            
+            for building in self.game.wizardtowers:
+                if not building.isBroken and self.inRange(building):
+                    self.registerHit(building)
     def inRange(self,building):
         centre_x = self.x + 8*movementKeys[self.lastmoved][0]
         centre_y = self.y + 8*movementKeys[self.lastmoved][1]
