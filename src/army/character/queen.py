@@ -40,33 +40,34 @@ class Queen(Person):
         if not self.isDead and ch == ' ':
 
             for building in self.game.walls:
-                if not building.isBroken and self.inRange(building):
+                if not building.isBroken and self.checkCollision(building):
                     self.registerHit(building)
 
             for building in self.game.cannons:
-                if not building.isBroken and self.inRange(building):
+                if not building.isBroken and self.checkCollision(building):
                     self.registerHit(building)
 
-            if not self.game.townhall.isBroken and self.inRange(self.game.townhall):
+            if not self.game.townhall.isBroken and self.checkCollision(self.game.townhall):
                 # print(self.game.townhall.health, file=sys.stderr)
                 self.registerHit(self.game.townhall)
 
             for building in self.game.huts:
-                if not building.isBroken and self.inRange(building):
+                if not building.isBroken and self.checkCollision(building):
                     self.registerHit(building)
             
             for building in self.game.wizardtowers:
-                if not building.isBroken and self.inRange(building):
+                if not building.isBroken and self.checkCollision(building):
                     self.registerHit(building)
-    def inRange(self,building):
+
+    def checkCollision(self,building):
         centre_x = self.x + 8*movementKeys[self.lastmoved][0]
         centre_y = self.y + 8*movementKeys[self.lastmoved][1]
         # check if the building is in 5*5 area
-        if building.x <= centre_x + 5 and building.x >= centre_x - 5:
-            if building.y <= centre_y + 5 and building.y >= centre_y - 5:
+        if building.x <= centre_x + 2 and building.x >= centre_x - 2:
+            if building.y <= centre_y + 2 and building.y >= centre_y - 2:
                 # print("in range", file=sys.stderr)
-                return True
-        return False
+                return 1
+        return 0
 
     # polymorphism example
     def draw(self,screen):

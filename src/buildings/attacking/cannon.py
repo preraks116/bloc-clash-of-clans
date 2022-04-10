@@ -15,7 +15,7 @@ class Cannon(Building):
         # self.health = 25
         self.attack = 5
         self.cooldown = 8
-        self.range = 5  
+        self.range = 3
         # self.isBroken = False
     
     def inRange(self, person):

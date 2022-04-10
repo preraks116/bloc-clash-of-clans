@@ -53,6 +53,10 @@ class King(Person):
             for building in self.game.huts:
                 if not building.isBroken and self.checkCollision(building):
                     self.registerHit(building)
+                
+            for building in self.game.wizardtowers:
+                if not building.isBroken and self.checkCollision(building):
+                    self.registerHit(building)
 
     # polymorphism example
     def draw(self,screen):

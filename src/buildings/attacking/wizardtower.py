@@ -14,7 +14,7 @@ class WizardTower(Building):
         # self.health = 25
         self.attack = 5
         self.cooldown = 3
-        self.range = 5  
+        self.range = 3  
         # self.isBroken = False
     
     # manhattan distance
@@ -28,7 +28,7 @@ class WizardTower(Building):
     def registerAOE(self, troops, origin):
         for troop in troops:
             if not troop.isDead and not origin.isDead and self.isNextTo(troop, origin):
-                print("AOE registered: ",troop.health, file=sys.stderr)
+                # print("AOE registered: ",troop.health, file=sys.stderr)
                 troop.health -= self.attack
                 if troop.health <= 0:
                     troop.isDead = True

@@ -2,14 +2,18 @@
 Block version of Clash of Clans
 
 ## Controls
-### King's Movement
+### King's and Queen's Movement
 - **W**: Move king forward
 - **A**: Move king left
 - **S**: Move king back
 - **D**: Move king right
 - **Space**: Attack
+
 ### Spawn Points
-There are 3 spawn points which spawn barbarians which can be controlled using the keys `1`,`2` and `3`.
+There are 3 spawn points which spawn troop. The controls are as follows:
+- **Barbarians**: can be spawned using the keys `1`,`2` and `3`.
+- **Archers**: can be spawned using the keys `4`, `5`, and `6`.
+- **Balloons**: can be spawned using the keys `7`, `8` and `9`.
 ### Spells
 - **H**: Activate Heal Spell
 - **R**: Activate Rage Spell
