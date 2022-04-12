@@ -150,6 +150,7 @@ class Game:
         for barbarian in self.barbarians:
             barbarian.updateBarb(self.screen)
             barbarian.draw(self.screen.screen)
+            # print(barbarian.health, file=sys.stderr)
         for archer in self.archers:
             archer.updateArcher(self.screen)
             archer.draw(self.screen.screen)
@@ -268,7 +269,7 @@ class Game:
                         self.troop_limits['balloon'] -= 1
                 elif ch == 'r':
                     if self.rageSpell:
-                        self.rageSpell = 0
+                        self.rageSpell -= 1 
                         self.king.attack *= 2
                         self.king.cooldown /= 2
                         for barbarian in self.barbarians:
@@ -282,14 +283,16 @@ class Game:
                             balloon.cooldown /= 2
                 elif ch == 'h':
                     if self.healSpell:
-                        self.healSpell = 0
+                        self.healSpell -= 1
                         self.king.health *= 1.5
                         if self.king.health > self.king.maxHealth:
                             self.king.health = self.king.maxHealth
                         for barbarian in self.barbarians:
+                            print(barbarian.health)
                             barbarian.health *= 1.5
                             if barbarian.health > barbarian.maxHealth:
                                 barbarian.health = barbarian.maxHealth
+                            
                         for archer in self.archers:
                             archer.health *= 1.5
                             if archer.health > archer.maxHealth:

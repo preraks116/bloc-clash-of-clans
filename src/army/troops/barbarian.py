@@ -23,7 +23,6 @@ class Barbarian(Person):
     def getDistance(self, building):
         return (abs(self.x - building.x) + abs(self.y - building.y))
 
-    
     def getNearestBuilding(self):
         nearest = None
         maxdist = 99
