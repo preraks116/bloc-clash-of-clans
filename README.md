@@ -19,6 +19,7 @@ There are 3 spawn points which spawn troop. The controls are as follows:
 - **R**: Activate Rage Spell
 ## Running the game
 ```
+mkdir replays
 python game.py
 ```
 ## Running the replay
