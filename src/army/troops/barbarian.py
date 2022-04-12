@@ -72,6 +72,9 @@ class Barbarian(Person):
                 self.getNearestBuilding()
                 if self.nearestBuilding is None:
                     return
+            if self.nearestBuilding.isBroken:
+                self.nearestBuilding = None
+                return
             if not self.checkCollision(self.nearestBuilding):
                 hasStopped = 1
                 screen.screen[self.x][self.y] = screen.bg
