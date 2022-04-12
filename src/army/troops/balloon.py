@@ -78,6 +78,9 @@ class Balloon(Person):
                 self.getNearestBuilding()
                 if self.nearestBuilding is None:
                     return
+            if self.nearestBuilding.isBroken:
+                self.nearestBuilding = None
+                return
             if not self.checkCollision(self.nearestBuilding):
                 screen.screen[self.x][self.y] = screen.bg
                 if self.x < self.nearestBuilding.x:
